@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Application extends Model
+class Service extends Model
 {
     use HasFactory;
     protected $guarded = false;
 
-    public function applicationTypes():BelongsTo
+    public function sections():BelongsTo
     {
-        return $this->belongsTo(Application_type::class, 'application_type_id');
+        return $this->BelongsTo(Section::class, 'section_id');
     }
 }

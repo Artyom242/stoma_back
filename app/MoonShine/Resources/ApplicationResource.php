@@ -4,23 +4,22 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources;
 
-use App\Models\Application_types;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\Application;
-
+use Illuminate\Database\Eloquent\Model;
+use MoonShine\Components\MoonShineComponent;
+use MoonShine\Decorations\Block;
 use MoonShine\Decorations\Column;
 use MoonShine\Decorations\Flex;
 use MoonShine\Decorations\Grid;
 use MoonShine\Fields\Date;
-use MoonShine\Fields\Number;
+use MoonShine\Fields\Field;
+use MoonShine\Fields\ID;
 use MoonShine\Fields\Phone;
 use MoonShine\Fields\Relationships\BelongsTo;
+use MoonShine\Fields\Relationships\HasMany;
+use MoonShine\Fields\Switcher;
 use MoonShine\Fields\Text;
 use MoonShine\Resources\ModelResource;
-use MoonShine\Decorations\Block;
-use MoonShine\Fields\ID;
-use MoonShine\Fields\Field;
-use MoonShine\Components\MoonShineComponent;
 
 /**
  * @extends ModelResource<Application>
@@ -44,9 +43,13 @@ class ApplicationResource extends ModelResource
                 Grid::make([
                     Column::make([
                         Flex::make([
+                            BelongsTo::make('Вид записи', 'applicationTypes', 'name', resource: new Application_typeResource())
+                        ]),
+                        Flex::make([
                             Text::make('Имя', 'name')->required(),
                             Phone::make('Телефон', 'phone')
                                 ->mask('+7 999 999 99 99')
+                                ->locked()
                                 ->required(),
                         ]),
                         Flex::make([
@@ -54,7 +57,9 @@ class ApplicationResource extends ModelResource
                                 ->format('d.m.Y')
                                 ->required(),
                             Text::make('Время', 'application_time')->required(),
-                        ])
+                        ]),
+                        Switcher::make('Подтверждение', 'confirm')
+                        ->sortable()
                     ]),
                 ]),
             ]),

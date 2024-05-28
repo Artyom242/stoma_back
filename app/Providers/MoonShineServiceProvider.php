@@ -5,9 +5,13 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Models\Application;
+use App\Models\Comment;
+use App\Models\Feedback;
 use App\MoonShine\Resources\ApplicationResource;
+use App\MoonShine\Resources\CommentResource;
+use App\MoonShine\Resources\FeedbackResource;
+use App\MoonShine\Resources\ServiceResource;
 use MoonShine\Providers\MoonShineApplicationServiceProvider;
-use MoonShine\MoonShine;
 use MoonShine\Menu\MenuGroup;
 use MoonShine\Menu\MenuItem;
 use MoonShine\Resources\MoonShineUserResource;
@@ -51,8 +55,12 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
                    new MoonShineUserRoleResource()
                ),
             ]),
+
             MenuItem::make('Записи', new ApplicationResource())
-                ->badge(fn() => Application::query()->where('confirm', '0')->count())
+                ->badge(fn() => Application::query()->where('confirm', '0')->count()),
+            MenuItem::make('Отзывы', new CommentResource())
+                ->badge(fn()=>Comment::query()->count()),
+            MenuItem::make('Услуги', new ServiceResource())
         ];
     }
 
