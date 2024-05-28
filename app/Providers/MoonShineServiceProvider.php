@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Models\Application;
+use App\MoonShine\Resources\ApplicationResource;
 use MoonShine\Providers\MoonShineApplicationServiceProvider;
 use MoonShine\MoonShine;
 use MoonShine\Menu\MenuGroup;
@@ -49,9 +51,8 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
                    new MoonShineUserRoleResource()
                ),
             ]),
-
-            MenuItem::make('Documentation', 'https://moonshine-laravel.com')
-               ->badge(fn() => 'Check'),
+            MenuItem::make('Записи', new ApplicationResource())
+                ->badge(fn() => Application::query()->where('confirm', '0')->count())
         ];
     }
 
