@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Models\Comment;
-
-use MoonShine\Resources\ModelResource;
-use MoonShine\Decorations\Block;
-use MoonShine\Fields\ID;
-use MoonShine\Fields\Field;
+use Illuminate\Database\Eloquent\Model;
 use MoonShine\Components\MoonShineComponent;
+use MoonShine\Decorations\Block;
+use MoonShine\Fields\Field;
+use MoonShine\Fields\ID;
+use MoonShine\Resources\ModelResource;
 
 /**
  * @extends ModelResource<Comment>
@@ -19,6 +18,7 @@ use MoonShine\Components\MoonShineComponent;
 class CommentResource extends ModelResource
 {
     protected string $model = Comment::class;
+
 
     protected string $title = 'Отзывы';
 
@@ -30,7 +30,7 @@ class CommentResource extends ModelResource
         return [
             Block::make([
                 ID::make()->sortable(),
-            ]),
+]),
         ];
     }
 

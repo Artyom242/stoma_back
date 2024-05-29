@@ -7,6 +7,7 @@ namespace App\MoonShine\Resources;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Section;
 
+use MoonShine\Fields\Image;
 use MoonShine\Fields\Text;
 use MoonShine\Resources\ModelResource;
 use MoonShine\Decorations\Block;
@@ -23,6 +24,8 @@ class SectionResource extends ModelResource
 
     protected string $title = 'Разделы услуг';
 
+    protected string $column = 'Title';
+
     /**
      * @return list<MoonShineComponent|Field>
      */
@@ -31,7 +34,10 @@ class SectionResource extends ModelResource
         return [
             Block::make([
                 ID::make()->sortable(),
-                Text::make('Name')
+                Text::make('Название','name'),
+                Image::make('Иконка', 'image')
+                    ->disk('public')
+                    ->dir('images/icons'),
             ]),
         ];
     }

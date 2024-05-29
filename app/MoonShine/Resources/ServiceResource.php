@@ -9,7 +9,10 @@ use App\Models\Service;
 
 use MoonShine\Fields\Number;
 use MoonShine\Fields\Relationships\BelongsTo;
+use MoonShine\Fields\Relationships\BelongsToMany;
 use MoonShine\Fields\Text;
+use MoonShine\Handlers\ExportHandler;
+use MoonShine\Handlers\ImportHandler;
 use MoonShine\Resources\ModelResource;
 use MoonShine\Decorations\Block;
 use MoonShine\Fields\ID;
@@ -35,13 +38,25 @@ class ServiceResource extends ModelResource
     {
         return [
             Block::make([
-                ID::make()->sortable(),
+                ID::make()
+                    ->sortable()
+                    ->hideOnIndex(),
                 Text::make('Название', 'name'),
                 Number::make('Цена', 'price'),
                 BelongsTo::make('Раздел услуги', 'sections', 'name', resource: new SectionResource())
                 ->hideOnIndex(),
             ]),
         ];
+    }
+
+    public function import(): ?ImportHandler
+    {
+        return null;
+    }
+
+    public function export(): ?ExportHandler
+    {
+        return null;
     }
 
     /**

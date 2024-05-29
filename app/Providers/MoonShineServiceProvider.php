@@ -5,21 +5,20 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Models\Application;
-use App\Models\Comment;
-use App\Models\Feedback;
+use App\Models\Body_feedback;
 use App\MoonShine\Resources\ApplicationResource;
-use App\MoonShine\Resources\CommentResource;
-use App\MoonShine\Resources\FeedbackResource;
+use App\MoonShine\Resources\BodyCommentResource;
+use App\MoonShine\Resources\SectionResource;
 use App\MoonShine\Resources\ServiceResource;
-use MoonShine\Providers\MoonShineApplicationServiceProvider;
-use MoonShine\Menu\MenuGroup;
-use MoonShine\Menu\MenuItem;
-use MoonShine\Resources\MoonShineUserResource;
-use MoonShine\Resources\MoonShineUserRoleResource;
+use Closure;
 use MoonShine\Contracts\Resources\ResourceContract;
 use MoonShine\Menu\MenuElement;
+use MoonShine\Menu\MenuGroup;
+use MoonShine\Menu\MenuItem;
 use MoonShine\Pages\Page;
-use Closure;
+use MoonShine\Providers\MoonShineApplicationServiceProvider;
+use MoonShine\Resources\MoonShineUserResource;
+use MoonShine\Resources\MoonShineUserRoleResource;
 
 class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
 {
@@ -58,9 +57,12 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
 
             MenuItem::make('Записи', new ApplicationResource())
                 ->badge(fn() => Application::query()->where('confirm', '0')->count()),
-            MenuItem::make('Отзывы', new CommentResource())
-                ->badge(fn()=>Comment::query()->count()),
-            MenuItem::make('Услуги', new ServiceResource())
+            MenuItem::make('Отзывы', new BodyCommentResource())
+                ->badge(fn()=>Body_feedback::query()->where('confirm', '0')->count()),
+            MenuGroup::make('Услуги', [
+                MenuItem::make('Все услуги', new ServiceResource()),
+                MenuItem::make('Разделы', new SectionResource()),
+            ]),
         ];
     }
 
