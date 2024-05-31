@@ -24,7 +24,6 @@ class SectionResource extends ModelResource
 
     protected string $title = 'Разделы услуг';
 
-    protected string $column = 'Title';
 
     /**
      * @return list<MoonShineComponent|Field>
@@ -33,7 +32,9 @@ class SectionResource extends ModelResource
     {
         return [
             Block::make([
-                ID::make()->sortable(),
+                ID::make()
+                    ->sortable()
+                    ->hideOnIndex(),
                 Text::make('Название','name'),
                 Image::make('Иконка', 'image')
                     ->disk('public')

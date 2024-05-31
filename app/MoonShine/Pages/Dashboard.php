@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\MoonShine\Pages;
 
 use App\Models\Application;
+use App\Models\Body_feedback;
 use MoonShine\Decorations\Column;
 use MoonShine\Decorations\Grid;
+use MoonShine\Fields\Preview;
 use MoonShine\Metrics\ValueMetric;
 use MoonShine\Pages\Page;
 use MoonShine\Components\MoonShineComponent;
@@ -25,7 +27,7 @@ class Dashboard extends Page
 
     public function title(): string
     {
-        return $this->title ?: 'Dashboard';
+        return $this->title ?: 'Главная';
     }
 
     /**
@@ -39,8 +41,14 @@ class Dashboard extends Page
                     ValueMetric::make('Записи')
                         ->columnSpan(6)
                         ->value(Application::query()->where('confirm', '0')->count()),
-                ])
-            ])
+                ])->columnSpan(6),
+                Column::make([
+                    ValueMetric::make('Отзывы')
+                        ->columnSpan(6)
+                        ->value(Body_feedback::query()->where('confirm', '0')->count()),
+                ])->columnSpan(6),
+            ]),
+            Preview::make('ada', 'name')
         ];
 	}
 }
