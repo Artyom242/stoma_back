@@ -20,9 +20,9 @@ tinymce.Resource.add('tinymce.html-i18n.help-keynav.en',
   '\n' +
   '<h1>Navigate between UI sections</h1>\n' +
   '\n' +
-  '<p>To move from one UI section to the next, press <strong>Tab</strong>.</p>\n' +
+  '<p>To move from one UI sections to the next, press <strong>Tab</strong>.</p>\n' +
   '\n' +
-  '<p>To move from one UI section to the previous, press <strong>Shift+Tab</strong>.</p>\n' +
+  '<p>To move from one UI sections to the previous, press <strong>Shift+Tab</strong>.</p>\n' +
   '\n' +
   '<p>The <strong>Tab</strong> order of these UI sections is:</p>\n' +
   '\n' +
@@ -36,7 +36,7 @@ tinymce.Resource.add('tinymce.html-i18n.help-keynav.en',
   '  <li>Editor resize handle in the footer</li>\n' +
   '</ol>\n' +
   '\n' +
-  '<p>If a UI section is not present, it is skipped.</p>\n' +
+  '<p>If a UI sections is not present, it is skipped.</p>\n' +
   '\n' +
   '<p>If the footer has keyboard navigation focus, and there is no visible sidebar, pressing <strong>Shift+Tab</strong>\n' +
   '  moves focus to the first toolbar group, not the last.</p>\n' +
@@ -61,11 +61,11 @@ tinymce.Resource.add('tinymce.html-i18n.help-keynav.en',
   '  <li>move between items in a toolbar pop-up menu.</li>\n' +
   '</ul>\n' +
   '\n' +
-  '<p><strong>Arrow</strong> keys cycle within the focused UI section.</p>\n' +
+  '<p><strong>Arrow</strong> keys cycle within the focused UI sections.</p>\n' +
   '\n' +
   '<p>To close an open menu, an open sub-menu, or an open pop-up menu, press the <strong>Esc</strong> key.</p>\n' +
   '\n' +
-  '<p>If the current focus is at the ‘top’ of a particular UI section, pressing the <strong>Esc</strong> key also exits\n' +
+  '<p>If the current focus is at the ‘top’ of a particular UI sections, pressing the <strong>Esc</strong> key also exits\n' +
   '  keyboard navigation entirely.</p>\n' +
   '\n' +
   '<h1>Execute a menu item or toolbar button</h1>\n' +
