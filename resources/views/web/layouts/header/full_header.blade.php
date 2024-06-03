@@ -223,7 +223,7 @@
             </div>
             <a href="company.html">О клинике</a>
             <a href="price.html">Цены</a>
-            <a href="feedback.html">Отзывы</a>
+            <a href="{{asset('/feedback')}}">Отзывы</a>
             <a href="contact.html">Контакты</a>
         </nav>
     </div>
@@ -371,7 +371,7 @@
                     </div>
                     <a href="company.html">О клинике</a>
                     <a href="price.html">Цены</a>
-                    <a href="feedback.html">Отзывы</a>
+                    <a href="{{asset('/feedback')}}">Отзывы</a>
                     <a href="contact.html">Контакты</a>
                 </nav>
             </div>

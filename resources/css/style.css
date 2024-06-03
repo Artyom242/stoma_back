@@ -29,6 +29,31 @@
     fill: #0082cb;
 }
 
+.pagination{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-item {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.disabled {
+    fill: #d6d6d6;
+    pointer-events: none;
+}
+
+.active {
+    color: #0082cb;
+}
+
 .social_block {
   display: flex;
   gap: 4px;

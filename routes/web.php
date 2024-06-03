@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\feedbackController;
 use App\Http\Controllers\mainController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,3 +16,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [mainController::class, 'show'])->name('main');
+Route::get('/feedback', [feedbackController::class, 'show'])->name('feedback');
