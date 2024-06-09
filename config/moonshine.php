@@ -12,9 +12,9 @@ return [
     'dir' => 'app/MoonShine',
     'namespace' => 'App\MoonShine',
 
-    'title' => env('MOONSHINE_TITLE', 'MoonShine'),
-    'logo' => env('MOONSHINE_LOGO'),
-    'logo_small' => env('MOONSHINE_LOGO_SMALL'),
+    'title' => env('MOONSHINE_TITLE'),
+    'logo' => env('MOONSHINE_LOGO', '/images/logo.jpg'),
+    'logo_small' => env('MOONSHINE_LOGO_SMALL', '/images/logo.jpg'),
 
     'route' => [
         'domain' => env('MOONSHINE_URL', ''),
@@ -91,8 +91,7 @@ return [
         'pipelines' => [],
     ],
     'locales' => [
-        'en',
-        'ru',
+        'ru'
     ],
 
     'global_search' => [

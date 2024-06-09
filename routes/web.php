@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\clinicController;
+use App\Http\Controllers\contactController;
+use App\Http\Controllers\feedbackController;
+use App\Http\Controllers\mainController;
+use App\Http\Controllers\priceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [mainController::class, 'show'])->name('main');
+Route::get('/feedback', [feedbackController::class, 'show'])->name('feedback');
+Route::get('/contact', [contactController::class, 'show'])->name('contact');
+Route::get('/clinic', [clinicController::class, 'show'])->name('clinic');
+Route::get('/price', [priceController::class, 'show'])->name('price');
