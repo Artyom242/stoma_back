@@ -20,23 +20,17 @@
 
                         <div class="feedback_block_row_star">
                             <div class="feedback_block_data">
-                                <p class="text_small">{{$feedback->created_at}}</p>
+                                <p class="text_small">{{$feedback->formatted_date }}</p>
                             </div>
-                            <div>
-                                <img src="{{asset('images/icons/stars/star_yellow.svg')}}" alt="Желтая звезда" />
-                            </div>
-                            <div>
-                                <img src="{{asset('images/icons/stars/star_yellow.svg')}}" alt="Желтая звезда" />
-                            </div>
-                            <div>
-                                <img src="{{asset('images/icons/stars/star_yellow.svg')}}" alt="Желтая звезда" />
-                            </div>
-                            <div>
-                                <img src="{{asset('images/icons/stars/star_yellow.svg')}}" alt="Желтая звезда" />
-                            </div>
-                            <div>
-                                <img src="{{asset('images/icons/stars/star_yellow.svg')}}" alt="Желтая звезда" />
-                            </div>
+                            @for ($i = 1; $i <= 5; $i++)
+                                <div>
+                                    @if ($i <= $feedback->rating)
+                                        <img src="{{ asset('images/icons/stars/star_yellow.svg') }}" alt="Желтая звезда" />
+                                    @else
+                                        <img src="{{ asset('images/icons/stars/star_grey.svg') }}" alt="Серая звезда" />
+                                    @endif
+                                </div>
+                            @endfor
                         </div>
                     </div>
 

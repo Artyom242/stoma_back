@@ -779,17 +779,6 @@
 .feedback_gap {
   gap: 12px;
 }
-.swiper-wrapper {
-  transition-delay: inherit;
-}
-
-.feedback_slide,
-.swiper-slide {
-  width: auto;
-  height: auto;
-  cursor: pointer;
-}
-
 /* Call-sections */
 
 .call_section {

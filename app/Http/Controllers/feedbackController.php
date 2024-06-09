@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Body_feedback;
-use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\View\View;
 
 class feedbackController extends Controller
@@ -21,6 +21,11 @@ class feedbackController extends Controller
                 ->withPivot('body_feedback_id')
                 ->get();
         }
+
+        $feedbacks->each(function($feedback) {
+            $feedback->formatted_date = Carbon::parse($feedback->created_at)->format('d.m.Y');
+            $feedback->services_comments = $feedback->servicesComment;
+        });
 
         return view('web.sections.feedback', compact('feedbacks', 'feedback_services'));
     }

@@ -221,10 +221,10 @@
                     </div>
                 </div>
             </div>
-            <a href="company.html">О клинике</a>
-            <a href="price.html">Цены</a>
-            <a href="feedback.html">Отзывы</a>
-            <a href="contact.html">Контакты</a>
+            <a href="{{asset('/clinic')}}">О клинике</a>
+            <a href="{{asset('/price')}}">Цены</a>
+            <a href="{{asset('/feedback')}}">Отзывы</a>
+            <a href="{{asset('/contact')}}">Контакты</a>
         </nav>
     </div>
 </div>
@@ -351,10 +351,10 @@
                             </div>
                         </div>
                     </div>
-                    <a href="company.html">О клинике</a>
-                    <a href="price.html">Цены</a>
-                    <a href="feedback.html">Отзывы</a>
-                    <a href="contact.html">Контакты</a>
+                    <a href="{{asset('/clinic')}}">О клинике</a>
+                    <a href="{{asset('/price')}}">Цены</a>
+                    <a href="{{asset('/feedback')}}">Отзывы</a>
+                    <a href="{{asset('/contact')}}">Контакты</a>
                 </nav>
             </div>
         </div>

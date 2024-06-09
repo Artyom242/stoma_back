@@ -126,11 +126,11 @@
         <div>
             <h4 class="title_footer">Навигация по сайту</h4>
             <nav class="menu_footer">
-                <a href="index.html">Главная</a>
-                <a href="company.html">О клинике</a>
-                <a href="price.html">Цены</a>
-                <a href="feedback.html">Отзывы</a>
-                <a href="contact.html">Контакты</a>
+                <a href="{{asset('/')}}">Главная</a>
+                <a href="{{asset('/clinic')}}">О клинике</a>
+                <a href="{{asset('/price')}}">Цены</a>
+                <a href="{{asset('/feedback')}}">Отзывы</a>
+                <a href="{{asset('/contact')}}">Контакты</a>
             </nav>
         </div>
     </div>

@@ -8,13 +8,13 @@
     flex-direction: column;
     gap: 10px;
 }
-  
+
   .accordion {
     display: flex;
     flex-direction: column;
     gap: 10px;
   }
-  
+
   .accordion_btn {
     position: relative;
     width: 100%;
@@ -90,7 +90,7 @@
     transform: rotate(0);
 }
 
-.active .vertical-line {
+.active_item .vertical-line {
     transform: rotate3d(1, 1, 0, 90deg);
 }
 
