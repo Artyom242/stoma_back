@@ -8,6 +8,8 @@ import './bootstrap';
 import { createApp } from 'vue';
 import SliderFeedback from './components/SliderFeedback.vue';
 import Accordion from './components/Accordion.vue';
+import Sticky from './components/Sticky.vue';
+
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready
@@ -18,12 +20,15 @@ const app = createApp({
     components: {
         Accordion,
         SliderFeedback,
+        Sticky
     }
 });
 
-app.component('accordion', Accordion);
 app.component('slider-feedback', SliderFeedback);
+app.component('accordion', Accordion);
+app.component('header-sticky', Sticky);
 
+app.mount('#app');
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -42,4 +47,3 @@ app.component('slider-feedback', SliderFeedback);
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
-app.mount('#app');

@@ -5,18 +5,21 @@
 </head>
 <body>
     <div class="wrapper">
+        <div id="app">
         <header>
             @yield('header')
         </header>
 
         <main class="main_blocks">
-            @include('web.components.header_sticky')
+            <header-sticky></header-sticky>
+
             @yield('content')
         </main>
 
         <footer class="back_footer">
             @include('web.layouts.footer')
         </footer>
+        </div>
     </div>
 
     @yield('scripts')
