@@ -4,7 +4,7 @@
             <div class="__container">
                 <div class="header_top">
                     <div class="header_top__logo">
-                        <a href="index.html"><img src="images/full_logo.svg " alt="" /></a>
+                        <a :href="links.index"><img :src="links.logo" alt="Логотип" /></a>
                     </div>
                     <div class="header_top__info">
                         <div class="icon_info__block">
@@ -90,14 +90,7 @@
                     </div>
 
                     <!-- Скрытое меню -->
-                    <svg onclick="toggleMenu()" class="ham hamRotate ham8 header_top_burger"
-                         viewBox="0 0 100 100" width="50">
-                        <path class="line top"
-                              d="m 30,33 h 40 c 3.722839,0 7.5,3.126468 7.5,8.578427 0,5.451959 -2.727029,8.421573 -7.5,8.421573 h -20" />
-                        <path class="line middle" d="m 30,50 h 40" />
-                        <path class="line bottom"
-                              d="m 70,67 h -40 c 0,0 -7.5,-0.802118 -7.5,-8.365747 0,-7.563629 7.5,-8.634253 7.5,-8.634253 h 20" />
-                    </svg>
+                    <burgerButton></burgerButton>
                 </div>
             </div>
         </div>
@@ -121,7 +114,7 @@
                                              v-for="(section, index) in sections"
                                              :key="section.id">
                                             <div class="services_menu_block__title">
-                                                <img src="images/icons/{{section.image}}" class="img services_menu_block__img" alt="Иконка лечение зуба">
+                                                <img :src="'/storage/' + section.image" class="img services_menu_block__img" alt="Иконка лечение зуба">
                                                 <h5>{{ section.name }}</h5>
                                             </div>
                                             <nav class="services_menu_block__boby">
@@ -148,8 +141,10 @@
 
     <script>
     import axios from 'axios';
+    import BurgerButton from './BurgerButton.vue';
 
     export default {
+        components: { BurgerButton },
         data() {
             return {
                 isHeaderVisible: false,
@@ -178,23 +173,16 @@
                     console.error('Ошибка при получении данных:', error);
                 }
             },
-            asset(path) {
-                return `{{ asset('${path}') }}`;
-            },
             filteredServices(sectionId) {
                 return this.services.filter((service) => service.section_id === sectionId);
             },
             handleScroll() {
                 const scrollY = window.scrollY;
                 if (scrollY > 600 || (window.innerWidth < 630 && scrollY > 400)) {
-                    this.isHeaderVisible = true;
-                } else {
-                    this.isHeaderVisible = false;
-                }
-            },
-                toggleMenu() {
-                    this.isMenuActive = !this.isMenuActive;
-                    this.menuMaxHeight = this.isMenuActive ? this.$refs.mobileMenu.scrollHeight + 40 + 'px' : '0px';
+                        this.isHeaderVisible = true;
+                    } else {
+                        this.isHeaderVisible = false;
+                    }
                 },
             },
         };

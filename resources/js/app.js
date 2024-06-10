@@ -9,6 +9,8 @@ import { createApp } from 'vue';
 import SliderFeedback from './components/SliderFeedback.vue';
 import Accordion from './components/Accordion.vue';
 import Sticky from './components/Sticky.vue';
+import Burger from './components/Burger.vue';
+import BurgerButton from './components/BurgerButton.vue';
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -20,13 +22,17 @@ const app = createApp({
     components: {
         Accordion,
         SliderFeedback,
-        Sticky
+        Sticky,
+        Burger,
+        BurgerButton,
     }
 });
 
 app.component('slider-feedback', SliderFeedback);
 app.component('accordion', Accordion);
 app.component('header-sticky', Sticky);
+app.component('burger', Burger);
+app.component('burgerButton', BurgerButton);
 
 app.mount('#app');
 /**

@@ -14,6 +14,8 @@ class StickyHeaderController extends Controller
         $sections = Section::query()->get();
 
         $links = [
+            'logo' => asset('images/full_logo.svg'),
+            'index' => asset('/'),
             'clinic' => asset('/clinic'),
             'price' => asset('/price'),
             'feedback' => asset('/feedback'),

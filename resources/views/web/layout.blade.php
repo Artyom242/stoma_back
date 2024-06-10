@@ -6,19 +6,19 @@
 <body>
     <div class="wrapper">
         <div id="app">
-        <header>
-            @yield('header')
-        </header>
+            <header>
+                @yield('header')
+            </header>
 
-        <main class="main_blocks">
-            <header-sticky></header-sticky>
+            <main class="main_blocks">
+                <header-sticky></header-sticky>
 
-            @yield('content')
-        </main>
+                @yield('content')
+            </main>
 
-        <footer class="back_footer">
-            @include('web.layouts.footer')
-        </footer>
+            <footer class="back_footer">
+                @include('web.layouts.footer')
+            </footer>
         </div>
     </div>
 

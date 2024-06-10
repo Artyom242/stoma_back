@@ -16,4 +16,3 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/stickyHeader', [StickyHeaderController::class, 'index'])->name('StickyHeader');
-Route::get('/feedback', [StickyHeaderController::class, 'index']);

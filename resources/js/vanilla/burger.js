@@ -1,7 +1,7 @@
     function toggleMenu() {
         const menu = document.getElementById('header_top_burger_menu');
         const burgerButtons = document.querySelectorAll('.header_top_burger');
-        console.log(burgerButtons);
+
         if (menu) {
             menu.classList.toggle('open');
             burgerButtons.forEach(button => {
