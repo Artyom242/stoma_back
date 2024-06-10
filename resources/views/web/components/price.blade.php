@@ -6,7 +6,7 @@
         </div>
 
         <div class="accordion_section">
-            <accordion :sections="{{ json_encode($sections) }}" :services="{{ json_encode($services) }}"></accordion>
+            <accordion></accordion>
 
             <button class="btn btn_submit openModalBtn"><span>Записаться</span></button>
 

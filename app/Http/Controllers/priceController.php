@@ -11,9 +11,6 @@ class priceController extends Controller
     public function show(): View {
         /* @var Service $service */
 
-        $services = Service::query()->get();
-        $sections = Section::query()->get();
-
-        return view('web.sections.price', compact('services', 'sections'));
+        return view('web.sections.price');
     }
 }
