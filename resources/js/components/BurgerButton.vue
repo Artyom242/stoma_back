@@ -14,8 +14,13 @@ import { menuStore } from './MenuStore';
 
 export default {
     setup() {
+        const toggleMenu = () => {
+            menuStore.toggleMenu();
+        };
+
         return {
-            menuStore
+            menuStore,
+            toggleMenu
         };
     }
 }
