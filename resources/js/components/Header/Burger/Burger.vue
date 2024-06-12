@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { menuStore } from './MenuStore';
+import { menuStore } from '../../Helpers/MenuStore';
 import BurgerButton from './BurgerButton.vue';
 import {computed} from "vue";
 

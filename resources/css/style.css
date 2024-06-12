@@ -347,6 +347,8 @@
 .header_bottom {
   background: #efefef;
   box-shadow: 0 15px 20px #00000021;
+    position: relative;
+    top: -1px;
 }
 
 .header_bottom_block {
@@ -614,12 +616,16 @@
 .calendar tbody td {
   color: black;
 }
-.calendar tbody td:nth-child(n + 6),
+
 .calendar .holiday {
   color: red;
 }
 .calendar tbody td.today {
   border: 1px #bdbdbd dashed;
+}
+
+.calendar tbody td:hover{
+    background: rgb(220, 241, 253);
 }
 
 .calendar .body_calendar tr td {
@@ -642,7 +648,7 @@
   gap: 40px;
 }
 
-.row_deys_calendar td {
+.row_days_calendar td {
   height: 30px;
 }
 

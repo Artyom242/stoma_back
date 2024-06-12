@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { menuStore } from './MenuStore';
+import { menuStore } from '../../Helpers/MenuStore';
 
 export default {
     setup() {

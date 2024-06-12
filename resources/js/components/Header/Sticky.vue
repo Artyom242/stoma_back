@@ -94,99 +94,67 @@
                 </div>
             </div>
         </div>
-        <div class="header_bottom">
-            <div class="__container">
-                <div class="header_bottom_section">
-                    <div class="header_bottom_block">
-                        <nav class="header_bottom_menu">
-                            <div class="item_menu_icon">
-                                <p>Все услуги</p>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="6"
-                                     viewBox="0 0 13 7">
-                                    <path
-                                        d="M3.25762 3.72175L6.51269 6.97937L9.76777 3.72175L13.0254 0.466675H6.51269H0L3.25762 3.72175Z"
-                                        fill="#2F2F2F" />
-                                </svg>
-                                <div class="services_menu">
-                                    <h3>Услуги клиники</h3>
-                                    <div class="services_menu_sections">
-                                        <div class="services_menu_block"
-                                             v-for="(section, index) in sections"
-                                             :key="section.id">
-                                            <div class="services_menu_block__title">
-                                                <img :src="'/storage/' + section.image" class="img services_menu_block__img" alt="Иконка лечение зуба">
-                                                <h5>{{ section.name }}</h5>
-                                            </div>
-                                            <nav class="services_menu_block__boby">
-                                                <a href=""
-                                                   v-for="service in filteredServices(section.id)"
-                                                   :key="service.id"
-                                                >{{ service.name }}</a>
-                                            </nav>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a :href="links.clinic">О клинике</a>
-                            <a :href="links.price">Цены</a>
-                            <a :href="links.feedback">Отзывы</a>
-                            <a :href="links.contact">Контакты</a>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <header-bottom ref="menu" :services="services" :sections="sections" :links="links"></header-bottom>
     </section>
     </template>
 
-    <script>
-    import axios from 'axios';
-    import BurgerButton from './BurgerButton.vue';
+<script>
+import BurgerButton from './Burger/BurgerButton.vue';
+import { fetchData } from '../Helpers/dataFetch';
+import { menuStore } from '../Helpers/MenuStore';
+import Header_bottom from "./Header_bottom.vue";
 
-    export default {
-        components: { BurgerButton },
-        data() {
-            return {
-                isHeaderVisible: false,
-                services: [],
-                sections: [],
-                links: {}
-            };
-        },
-        mounted() {
-            window.addEventListener('scroll', this.handleScroll);
-        },
-        beforeUnmount() {
-            window.removeEventListener('scroll', this.handleScroll);
-        },
-        created() {
-            this.fetchData();
-        },
-        methods: {
-            async fetchData() {
-                try {
-                    const response = await axios.get('/api/stickyHeader');
-                    this.services = response.data.services;
-                    this.sections = response.data.sections;
-                    this.links = response.data.links;
-                } catch (error) {
-                    console.error('Ошибка при получении данных:', error);
-                }
-            },
-            filteredServices(sectionId) {
-                return this.services.filter((service) => service.section_id === sectionId);
-            },
-            handleScroll() {
-                const scrollY = window.scrollY;
-                if (scrollY > 600 || (window.innerWidth < 630 && scrollY > 400)) {
-                        this.isHeaderVisible = true;
-                    } else {
-                        this.isHeaderVisible = false;
-                    }
-                },
-            },
+export default {
+    components: { BurgerButton, Header_bottom },
+    data() {
+        return {
+            isHeaderVisible: false,
+            services: [],
+            sections: [],
+            links: {}
         };
-    </script>
+    },
+    setup() {
+        return {
+            menuStore
+        };
+    },
+    async created() {
+        const data = await fetchData();
+        this.services = data.services;
+        this.sections = data.sections;
+        this.links = data.links;
+
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    methods: {
+        handleScroll() {
+            const scrollY = window.scrollY;
+            if (scrollY > 600 || (window.innerWidth < 630 && scrollY > 400)) {
+                this.isHeaderVisible = true;
+            } else {
+                this.isHeaderVisible = false;
+            }
+        },
+        handleClick(event) {
+            const menu = this.$refs.menu.$el;
+            if (menu && menuStore.isMenuOpen) {
+                const isClickInsideMenu = menu.contains(event.target);
+                const isClickOnBurger = event.target.classList.contains('header_top_burger');
+                if (isClickInsideMenu && !isClickOnBurger) {
+                    menuStore.toggleMenu();
+                }
+            }
+        }
+    },
+    mounted() {
+        document.addEventListener('click', this.handleClick);
+    },
+    beforeUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
+}
+</script>
 
     <style scoped>
     </style>

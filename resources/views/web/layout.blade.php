@@ -14,6 +14,7 @@
                 <header-sticky></header-sticky>
 
                 @yield('content')
+
             </main>
 
             <footer class="back_footer">

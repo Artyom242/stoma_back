@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ApplicationsController;
 use App\Http\Controllers\Api\StickyHeaderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -16,3 +17,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/stickyHeader', [StickyHeaderController::class, 'index'])->name('StickyHeader');
+Route::get('/applications', [ApplicationsController::class, 'index']);
