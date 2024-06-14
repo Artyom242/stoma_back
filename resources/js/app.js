@@ -14,7 +14,7 @@
     import Header_bottom from './components/Header/Header_bottom.vue';
     import Modal from './components/Modal/Modal.vue';
     import CalendarBlock from './components/CalendarBlock.vue';
-    import AppointmentForm from './components/Forms/AppointmentForm.vue';
+    import AppointmentForm from './components/Forms/FormFrame.vue';
     import VueTheMask from 'vue-the-mask';
 
     /**

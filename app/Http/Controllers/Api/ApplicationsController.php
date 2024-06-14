@@ -15,4 +15,11 @@ class ApplicationsController extends Controller
             'applications' => $applications,
         ]);
     }
+    public function create($day){
+        $applications = Application::query()->where('application_date', $day)->get();
+
+        return response()->json([
+            'applications' => $applications,
+        ]);
+    }
 }

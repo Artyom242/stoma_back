@@ -1,22 +1,8 @@
 <template>
     <div class="column_form_two">
         <div class="block_forms">
-            <h4 class="title_calendar">Свободное время <span class="necessarily">*</span></h4>
-            <div class="pole">
-                <div class="pole column_pole">
-                    <div class="block_checkbox" v-for="(time, index) in times.slice(0, Math.ceil(times.length / 2))" :key="index">
-                        <input class="input_checkbox" type="checkbox" :id="time.id" v-model="time.selected">
-                        <label :for="time.id">{{ time.label }}</label>
-                    </div>
-                </div>
-                <div class="pole column_pole">
-                    <div class="block_checkbox" v-for="(time, index) in times.slice(Math.ceil(times.length / 2))" :key="index">
-                        <input class="input_checkbox" type="checkbox" :id="time.id" v-model="time.selected">
-                        <label :for="time.id">{{ time.label }}</label>
-                    </div>
-                </div>
-            </div>
-
+            <h4 class="title_calendar">Свободное время</h4>
+            <p>Консультация проходит в 8:45</p>
         </div>
         <div class="block_forms">
             <div class="pole column_pole">
@@ -40,7 +26,7 @@
 </template>
 
 <script>
-import {ref, computed, watch, defineComponent, nextTick} from 'vue';
+import {ref, computed, watch, defineComponent} from 'vue';
 
 export default defineComponent({
     props: {
@@ -49,9 +35,8 @@ export default defineComponent({
         initialPhone: String,
         initialIsValidName: Boolean,
         initialIsFormValid: Boolean,
-        initialSelectedTimes: Array,
     },
-    emits: ['UpdateName', 'UpdatePhone', 'UpdateIsValidName', 'UpdateIsFormValid', 'selectedTimes'],
+    emits: ['UpdateName', 'UpdatePhone', 'UpdateIsValidName', 'UpdateIsFormValid'],
     setup(props, { emit }) {
         const localName = ref(props.initialName);
         const localPhone = ref(props.initialPhone);
@@ -61,16 +46,9 @@ export default defineComponent({
             UpdateIsValidName(localName.value);
         };
 
-        const updateIsValidTime = async () => {
-            await nextTick();
-            const selectedTimes = props.times.filter(time => time.selected).map(time => time.label);
-            emit('selectedTimes', selectedTimes);
-            UpdateIsFormValid();
-        };
-
         const UpdatePhone = (value) => {
             emit('UpdatePhone', localPhone.value);
-            UpdateIsFormValid();
+            UpdateIsFormValid()
         };
 
         const UpdateIsValidName = (value) => {
@@ -82,11 +60,8 @@ export default defineComponent({
         const UpdateIsFormValid = () => {
             const isNameValid = /^[A-Za-zА-Яа-яЁё]*$/.test(localName.value) && localName.value !== '';
             const isPhoneValid = localPhone.value !== null && localPhone.value.trim() !== '' && localPhone.value.length === 17;
-            const isTimeValid = props.times.some(time => time.selected);
-            emit('UpdateIsFormValid', isNameValid && isPhoneValid && isTimeValid);
+            emit('UpdateIsFormValid', isNameValid && isPhoneValid);
         };
-
-        watch(() => props.times, updateIsValidTime, { deep: true });
 
         watch(() => props.initialName, UpdateName);
         watch(() => props.initialPhone, UpdatePhone);
@@ -99,7 +74,6 @@ export default defineComponent({
         return {
             localName,
             localPhone,
-            updateIsValidTime,
             UpdateName,
             UpdatePhone,
             UpdateIsFormValid,
@@ -111,16 +85,6 @@ export default defineComponent({
 </script>
 
 <style>
-[disabled],
-[disabled]:hover,
-[disabled]:after,
-[disabled]:before{
-    background: #bdbdbd;
-    color: white;
-    box-shadow: none;
-    font-weight: normal;
-    cursor: default;
-}
 
 .fade-enter-active, .fade-leave-active {
     transition: opacity 0.3s, transform 0.3s;
@@ -130,3 +94,4 @@ export default defineComponent({
     transform: translateY(10px);
 }
 </style>
+

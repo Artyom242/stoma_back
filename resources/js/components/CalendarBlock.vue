@@ -1,5 +1,5 @@
 <template>
-        <calendar @date-selected="handleDateSelected"></calendar>
+    <calendar @date-selected="handleDateSelected"></calendar>
 
     <transition name="fade" mode="out-in">
         <component :is="currentForm" :key="currentForm"></component>
@@ -11,7 +11,7 @@
 import { ref } from 'vue';
 import Calendar from '../components/CalendarComponents/Calendar.vue';
 import EmptyForm from '../components/CalendarComponents/EmptyForm.vue';
-import AppointmentForm from '../components/Forms/AppointmentForm.vue';
+import AppointmentForm from './Forms/FormFrame.vue';
 
 export default {
     components: {
