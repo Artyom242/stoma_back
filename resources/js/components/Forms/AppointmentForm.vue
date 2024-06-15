@@ -2,7 +2,7 @@
     <div class="column_form_two">
         <div class="block_forms">
             <h4 class="title_calendar">Свободное время <span class="necessarily">*</span></h4>
-            <div class="pole">
+            <div class="pole checkbox_btn_column">
                 <div class="pole column_pole">
                     <div class="block_checkbox" v-for="(time, index) in times.slice(0, Math.ceil(times.length / 2))" :key="index">
                         <input class="input_checkbox" type="checkbox" :id="time.id" v-model="time.selected">

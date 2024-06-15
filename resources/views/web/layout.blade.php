@@ -4,23 +4,20 @@
     @include('web.layouts.head')
 </head>
 <body>
-    <div class="wrapper">
-        <div id="app">
+    <div class="wrapper" id="app">
             <header>
                 @yield('header')
             </header>
 
             <main class="main_blocks">
                 <header-sticky></header-sticky>
-
+                <modal></modal>
                 @yield('content')
-
             </main>
 
             <footer class="back_footer">
                 @include('web.layouts.footer')
             </footer>
-        </div>
     </div>
 
     @yield('scripts')

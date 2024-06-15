@@ -2,7 +2,7 @@
     <form class="form" @submit.prevent="postForm" method="post">
         <div class="block_forms">
             <h4 class="title_calendar">Выберите запись <span class="necessarily">*</span></h4>
-            <div class="pole row_pole">
+            <div class="pole row_pole radio_btn_column">
                 <div class="form_radio_btn">
                     <input id="radio-1"type="radio" :disabled="isTimesEmpty" name="radio" value="1" v-model="appointmentType">
                     <label for="radio-1" :class="{disabled_label: isTimesEmpty}">На прием</label>
@@ -45,7 +45,8 @@ export default {
         busyTimes: Array,
     },
     components: { VueTheMask, AppointmentForm, ConsultationForm },
-    setup( props ) {
+    emits: ['selectedDate'],
+    setup( props, { emit } ) {
         const appointmentType = ref(null);
         const times = ref([
             { id: '1', label: '9:00 - 10:00', selected: false },
@@ -126,7 +127,6 @@ export default {
 
                     const response = await axios.post('api/applications', data);
                     modalSuccess.value = response.data;
-                    console.log(response.data);
 
                     currentFormKey.value += 1;
 
@@ -135,6 +135,7 @@ export default {
                     isValidName.value = false;
                     isFormValid.value = false;
                     selectedTimes.value = [];
+                    emit('selectedDate', null);
 
                     for (const timesKey of times.value) {
                         timesKey.selected = false;

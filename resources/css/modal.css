@@ -1,6 +1,5 @@
 /* Модальное окно */
 .modal {
-    display: none;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -10,13 +9,13 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     z-index: 1001;
     transition: opacity 0.3s ease-in-out;
-    opacity: 0;
+    min-height: 80vh;
     max-height: 80vh;
-    width: 95vw;
+    width: 85vw;
     border-radius: 10px;
     overflow-x: hidden;
   }
-  
+
   .modal_header {
     position: relative;
     width: 100%;
@@ -24,7 +23,6 @@
 
   /* Затемняющий фон */
   .overlay {
-    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -35,7 +33,7 @@
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
   }
-  
+
   /* Кнопка закрытия модального окна */
   .close-btn {
     position: absolute;
@@ -54,7 +52,7 @@
   .close-btn .ham8.active .line {
     stroke: #fff;
   }
-  
+
   body.modal-open {
     overflow: hidden;
   }
@@ -71,6 +69,20 @@
     .modal {
         padding: 40px 20px;
     }
+}
 
+@media (max-width: 400px) {
+    .modal-content  .radio_btn_column {
+        flex-direction: column;
+    }
+    .modal-content .radio_btn_column .form_radio_btn {
+        width: 100%;
+    }
+}
 
+@media (max-width: 350px) {
+    .modal-content .checkbox_btn_column {
+        flex-direction: column;
+        gap: 10px;
+    }
 }

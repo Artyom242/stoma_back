@@ -1,8 +1,4 @@
 /* Модальное окно */
-.modal {
-    width: auto;
-  }
-
 .feedback_form {
     max-width: 900px;
     margin: 0 auto;
@@ -39,22 +35,22 @@
     display: flex;
     gap: 5px;
   }
-  
+
   .stars img {
     width: 30px;
     height: 30px;
     transition: filter 0.2s ease;
   }
-  
+
   .stars img:hover {
     filter: brightness(50%);
   }
-  
+
   .stars img.hovered,
   .stars img.selected {
     filter: brightness(50%);
   }
-  
+
 
 @media (max-width: 1000px) {
     .modal {

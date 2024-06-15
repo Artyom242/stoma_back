@@ -16,6 +16,7 @@
     import CalendarBlock from './components/CalendarBlock.vue';
     import AppointmentForm from './components/Forms/FormFrame.vue';
     import VueTheMask from 'vue-the-mask';
+    import BtnModal from './components/Modal/btnModal.vue';
 
     /**
      * Next, we will create a fresh Vue application instance. You may then begin
@@ -34,6 +35,7 @@
             Modal,
             CalendarBlock,
             AppointmentForm,
+            BtnModal,
         }
     });
 
@@ -45,9 +47,10 @@
     app.component('burger', Burger);
     app.component('burgerButton', BurgerButton);
     app.component('header-bottom', Header_bottom);
-    // app.component('modal', Modal);
+    app.component('modal', Modal);
     app.component('calendar-block', CalendarBlock);
     app.component('appointment-form', AppointmentForm);
+    app.component('btn-modal', BtnModal);
 
 
     app.mount('#app');

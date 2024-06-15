@@ -5,13 +5,14 @@
         <component :is="currentForm" :key="currentForm"
             :selectedDate="selectedDate"
             :busyTimes="busyTimes"
+            @selectedDate="selectedDate = $event"
         ></component>
     </transition>
 
 </template>
 
 <script>
-import { ref } from 'vue';
+import {ref, watch} from 'vue';
 import Calendar from '../components/CalendarComponents/Calendar.vue';
 import EmptyForm from '../components/CalendarComponents/EmptyForm.vue';
 import AppointmentForm from './Forms/FormFrame.vue';
@@ -32,6 +33,8 @@ export default {
             getTimeOfDay();
         };
 
+        watch(() => selectedDate, handleDateSelected);
+
         const getTimeOfDay = async () => {
             if (selectedDate.value){
                 const formattedDate = format(selectedDate.value, 'yyyy-MM-dd');
@@ -48,6 +51,7 @@ export default {
 
         const currentForm = ref('EmptyForm');
 
+
         return {
             selectedDate,
             handleDateSelected,
@@ -55,11 +59,13 @@ export default {
             busyTimes,
             getTimeOfDay
         };
+
     },
     watch: {
         selectedDate(newValue) {
             this.currentForm = newValue ? 'AppointmentForm' : 'EmptyForm';
         }
+
     }
 };
 </script>
