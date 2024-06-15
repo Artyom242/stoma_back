@@ -14,13 +14,12 @@ return new class extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->foreignId('application_type_id')->constrained();
             $table->string('name');
             $table->string('phone');
             $table->date('application_date');
-            $table->string('application_time');
             $table->boolean('confirm')->default(false);
+            $table->timestamps();
         });
     }
 

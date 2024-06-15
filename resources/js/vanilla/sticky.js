@@ -12,7 +12,7 @@ let mobile_menu = document.querySelector('.services_menu_mobile');
 
 menu_service.addEventListener('click', () => {
     const isActive = mobile_menu.classList.contains('block');
-    console.log(isActive);
+
     if (isActive) {
         mobile_menu.style.maxHeight = 0;
     } else {

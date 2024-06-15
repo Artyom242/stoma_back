@@ -17,7 +17,6 @@
     @include('web.components.motivations')
 
     @include('web.components.map')
-
 @endsection
 
 @section('scripts')

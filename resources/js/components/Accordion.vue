@@ -46,18 +46,41 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-    props: {
-        sections: Array,
-        services: Array,
-    },
     data() {
         return {
             activeIndex: 0,
             contentHeights: [],
+            services: [],
+            sections: [],
         };
     },
+    async created() {
+        await this.fetchData();
+        this.$nextTick(() => {
+            this.updateContentHeights();
+            if (this.activeIndex !== null) {
+                const content = this.$refs['content' + this.activeIndex][0];
+                if (content) {
+                    const padding = parseFloat(window.getComputedStyle(content).paddingTop) +
+                        parseFloat(window.getComputedStyle(content).paddingBottom);
+                    content.style.maxHeight = `${content.scrollHeight + padding}px`;
+                }
+            }
+        });
+    },
     methods: {
+        async fetchData() {
+            try {
+                const response = await axios.get('/api/stickyHeader');
+                this.services = response.data.services;
+                this.sections = response.data.sections;
+            } catch (error) {
+                console.error('Ошибка при получении данных:', error);
+            }
+        },
         toggle(index) {
             if (this.activeIndex === index) {
                 this.activeIndex = null;
@@ -65,6 +88,12 @@ export default {
                 this.activeIndex = index;
                 this.$nextTick(() => {
                     this.updateContentHeights();
+                    const content = this.$refs['content' + index][0];
+                    if (content) {
+                        const padding = parseFloat(window.getComputedStyle(content).paddingTop) +
+                            parseFloat(window.getComputedStyle(content).paddingBottom);
+                        content.style.maxHeight = `${content.scrollHeight + padding}px`;
+                    }
                 });
             }
         },
@@ -75,8 +104,7 @@ export default {
             this.contentHeights = this.sections.map((section, index) => {
                 const content = this.$refs['content' + index][0];
                 if (content) {
-                    const padding =
-                        20;
+                    const padding = 20;
                     return content.scrollHeight + padding;
                 }
                 return 0;

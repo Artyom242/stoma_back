@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\ApplicationsController;
+use App\Http\Controllers\Api\StickyHeaderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +16,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/stickyHeader', [StickyHeaderController::class, 'index'])->name('StickyHeader');
+Route::get('/applications/{data}', [ApplicationsController::class, 'getDays']);
+Route::post('/applications', [ApplicationsController::class, 'create']);
