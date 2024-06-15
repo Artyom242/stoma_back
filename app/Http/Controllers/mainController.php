@@ -15,4 +15,8 @@ class mainController extends Controller
 
         return view('web.sections.index', compact('services', 'sections'));
     }
+
+    public function create() {
+        dd('awd');
+    }
 }

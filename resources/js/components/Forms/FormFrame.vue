@@ -1,5 +1,5 @@
 <template>
-    <form class="form" @submit.prevent="postForm">
+    <form class="form" @submit.prevent="postForm" method="post">
         <div class="block_forms">
             <h4 class="title_calendar">Выберите запись <span class="necessarily">*</span></h4>
             <div class="pole row_pole">
@@ -37,17 +37,24 @@ import { ref, computed } from 'vue';
 import VueTheMask from 'vue-the-mask';
 import AppointmentForm from './AppointmentForm.vue';
 import ConsultationForm from './ConsultationForm.vue';
+import { format } from 'date-fns';
 
 export default {
+    props: {
+        selectedDate: Date,
+    },
     components: { VueTheMask, AppointmentForm, ConsultationForm },
-    setup() {
+    setup( props ) {
         const appointmentType = ref(null);
         const times = ref([
             { id: '1', label: '9:00 - 10:00', selected: false },
             { id: '2', label: '10:00 - 11:00', selected: false },
-            { id: '3', label: '12:00 - 13:00', selected: false },
-            { id: '4', label: '14:00 - 15:00', selected: false },
-            { id: '5', label: '16:00 - 17:00', selected: false },
+            { id: '3', label: '11:00 - 12:00', selected: false },
+            { id: '4', label: '12:00 - 13:00', selected: false },
+            { id: '5', label: '13:00 - 14:00', selected: false },
+            { id: '6', label: '14:00 - 15:00', selected: false },
+            { id: '7', label: '15:00 - 16:00', selected: false },
+            { id: '8', label: '16:00 - 17:00', selected: false },
         ]);
         const name = ref('');
         const phone = ref('');
@@ -77,30 +84,28 @@ export default {
             return null;
         });
 
+
+
         const postForm = async () => {
             if (isFormValid.value) {
+                const formattedDate = format(props.selectedDate, 'yyyy-MM-dd');
+
                 const data = {
+                    type: appointmentType.value,
                     name: name.value,
                     phone: phone.value,
-                    times: appointmentType.value === '1' ? selectedTimes.value : ['8:45 - 9:00'],
+                    times: appointmentType.value === '1' ? selectedTimes.value : ['8:45'],
+                    dateCreate: formattedDate,
                 };
-                try {
-                    const response = await fetch('/api/appointments', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(data),
-                    });
-                    if (response.ok) {
-                        console.log('Appointment saved successfully');
-                    } else {
-                        console.error('Failed to save appointment');
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                }
+
+                axios.post('api/applications', data)
+                    .then(res => {
+                        console.log(res)
+                }).catch(function (error) {
+                    console.log(error.toJSON());
+                });
             }
+        }
 
         return {
             appointmentType,

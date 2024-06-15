@@ -2,7 +2,9 @@
     <calendar @date-selected="handleDateSelected"></calendar>
 
     <transition name="fade" mode="out-in">
-        <component :is="currentForm" :key="currentForm"></component>
+        <component :is="currentForm" :key="currentForm"
+            :selectedDate
+        ></component>
     </transition>
 
 </template>

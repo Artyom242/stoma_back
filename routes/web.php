@@ -5,6 +5,7 @@ use App\Http\Controllers\contactController;
 use App\Http\Controllers\feedbackController;
 use App\Http\Controllers\mainController;
 use App\Http\Controllers\priceController;
+use App\Http\Controllers\Web\Form\ApplicationsCreateController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,3 +24,4 @@ Route::get('/feedback', [feedbackController::class, 'show'])->name('feedback');
 Route::get('/contact', [contactController::class, 'show'])->name('contact');
 Route::get('/clinic', [clinicController::class, 'show'])->name('clinic');
 Route::get('/price', [priceController::class, 'show'])->name('price');
+

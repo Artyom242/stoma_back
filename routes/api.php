@@ -17,5 +17,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/stickyHeader', [StickyHeaderController::class, 'index'])->name('StickyHeader');
-Route::get('/applications', [ApplicationsController::class, 'index']);
+Route::get('/applications', [ApplicationsController::class, 'getDays']);
 Route::post('/applications', [ApplicationsController::class, 'create']);
