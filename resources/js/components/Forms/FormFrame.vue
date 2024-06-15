@@ -4,18 +4,18 @@
             <h4 class="title_calendar">Выберите запись <span class="necessarily">*</span></h4>
             <div class="pole row_pole">
                 <div class="form_radio_btn">
-                    <input id="radio-1"type="radio" name="radio" value="1" v-model="appointmentType">
-                    <label for="radio-1">На прием</label>
+                    <input id="radio-1"type="radio" :disabled="isTimesEmpty" name="radio" value="1" v-model="appointmentType">
+                    <label for="radio-1" :class="{disabled_label: isTimesEmpty}">На прием</label>
                 </div>
                 <div class="form_radio_btn">
-                    <input id="radio-2" type="radio" name="radio" value="2" v-model="appointmentType">
-                    <label for="radio-2">На консультацию</label>
+                    <input id="radio-2" type="radio" :disabled="isTimeAvailableForConsultation" name="radio" value="2" v-model="appointmentType">
+                    <label for="radio-2" :class="{disabled_label: isTimeAvailableForConsultation}">На консультацию</label>
                 </div>
             </div>
         </div>
         <transition name="fade" mode="out-in">
             <component :is="currentFormComponent" :key="currentFormKey"
-                       :times="times"
+                       :times="availableTimes"
                        :initialName="name"
                        :initialPhone="phone"
                        :initialIsValidName="isValidName"
@@ -42,6 +42,7 @@ import { format } from 'date-fns';
 export default {
     props: {
         selectedDate: Date,
+        busyTimes: Array,
     },
     components: { VueTheMask, AppointmentForm, ConsultationForm },
     setup( props ) {
@@ -62,6 +63,20 @@ export default {
         const isFormValid = ref(false);
         const selectedTimes = ref([]);
 
+        const availableTimes = computed(() => {
+            return times.value.filter(time => {
+                return !props.busyTimes.some(busy => busy.time === time.label);
+            });
+        });
+
+        const isTimesEmpty = computed(() => {
+            return availableTimes.value.length === 0;
+        });
+
+        const isTimeAvailableForConsultation = computed(() => {
+            return props.busyTimes.some(busy => busy.time === '8:45');
+        });
+
         const updateName = (value) => {
             name.value = value;
         };
@@ -76,6 +91,7 @@ export default {
 
         const currentFormKey = ref(null);
         const currentFormComponent = computed(() => {
+            console.log(isTimeAvailableForConsultation.value);
             if (appointmentType.value === '1') {
                 return 'AppointmentForm';
             } else if (appointmentType.value === '2') {
@@ -83,8 +99,6 @@ export default {
             }
             return null;
         });
-
-
 
         const postForm = async () => {
             if (isFormValid.value) {
@@ -100,7 +114,12 @@ export default {
 
                 axios.post('api/applications', data)
                     .then(res => {
-                        console.log(res)
+                        console.log(res);
+                        name.value = '';
+                        phone.value = '';
+                        isValidName.value = false;
+                        isFormValid.value = false;
+                        selectedTimes.value = [];
                 }).catch(function (error) {
                     console.log(error.toJSON());
                 });
@@ -117,6 +136,9 @@ export default {
             currentFormKey,
             currentFormComponent,
             selectedTimes,
+            availableTimes,
+            isTimeAvailableForConsultation,
+            isTimesEmpty,
             updatePhone,
             updateName,
             updateTimes,
@@ -130,12 +152,14 @@ export default {
 [disabled],
 [disabled]:hover,
 [disabled]:after,
-[disabled]:before{
+[disabled]:before,
+.form_radio_btn .disabled_label{
     background: #bdbdbd;
     color: white;
     box-shadow: none;
     font-weight: normal;
     cursor: default;
+    transform: rotateY(0);
 }
 
 .fade-enter-active, .fade-leave-active {

@@ -3,7 +3,8 @@
 
     <transition name="fade" mode="out-in">
         <component :is="currentForm" :key="currentForm"
-            :selectedDate
+            :selectedDate="selectedDate"
+            :busyTimes="busyTimes"
         ></component>
     </transition>
 
@@ -14,6 +15,7 @@ import { ref } from 'vue';
 import Calendar from '../components/CalendarComponents/Calendar.vue';
 import EmptyForm from '../components/CalendarComponents/EmptyForm.vue';
 import AppointmentForm from './Forms/FormFrame.vue';
+import {format} from "date-fns";
 
 export default {
     components: {
@@ -23,17 +25,35 @@ export default {
     },
     setup() {
         const selectedDate = ref(null);
+        let busyTimes = ref([]);
 
         const handleDateSelected = (date) => {
             selectedDate.value = date;
+            getTimeOfDay();
         };
+
+        const getTimeOfDay = async () => {
+            if (selectedDate.value){
+                const formattedDate = format(selectedDate.value, 'yyyy-MM-dd');
+
+                axios.get('api/applications/' + formattedDate)
+                    .then(res => {
+                        busyTimes.value = res.data.times;
+                        console.log(res.data.times);
+                    }).catch(function (error) {
+                    console.log(error.toJSON());
+                });
+            }
+        }
 
         const currentForm = ref('EmptyForm');
 
         return {
             selectedDate,
             handleDateSelected,
-            currentForm
+            currentForm,
+            busyTimes,
+            getTimeOfDay
         };
     },
     watch: {
