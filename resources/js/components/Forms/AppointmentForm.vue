@@ -87,11 +87,9 @@ export default defineComponent({
         };
 
         watch(() => props.times, updateIsValidTime, { deep: true });
-
         watch(() => props.initialName, UpdateName);
         watch(() => props.initialPhone, UpdatePhone);
 
-        // Initialize validation state with initial props
         UpdateIsFormValid();
         UpdateIsValidName(localName.value);
         UpdatePhone(localPhone.value);

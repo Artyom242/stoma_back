@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import VueTheMask from 'vue-the-mask';
 import AppointmentForm from './AppointmentForm.vue';
 import ConsultationForm from './ConsultationForm.vue';
@@ -62,6 +62,7 @@ export default {
         const isValidName = ref(false);
         const isFormValid = ref(false);
         const selectedTimes = ref([]);
+        let modalSuccess = ref([]);
 
         const availableTimes = computed(() => {
             return times.value.filter(time => {
@@ -91,7 +92,6 @@ export default {
 
         const currentFormKey = ref(null);
         const currentFormComponent = computed(() => {
-            console.log(isTimeAvailableForConsultation.value);
             if (appointmentType.value === '1') {
                 return 'AppointmentForm';
             } else if (appointmentType.value === '2') {
@@ -100,29 +100,50 @@ export default {
             return null;
         });
 
+        const formComponent = () => {
+          if (appointmentType.value === '1' && isTimesEmpty.value ||
+              appointmentType.value === '2' && isTimeAvailableForConsultation.value){
+              appointmentType.value = null;
+          }
+        }
+
+        watch(availableTimes, () => {
+            formComponent();
+        });
+
         const postForm = async () => {
             if (isFormValid.value) {
-                const formattedDate = format(props.selectedDate, 'yyyy-MM-dd');
+                try {
+                    const formattedDate = format(props.selectedDate, 'yyyy-MM-dd');
 
-                const data = {
-                    type: appointmentType.value,
-                    name: name.value,
-                    phone: phone.value,
-                    times: appointmentType.value === '1' ? selectedTimes.value : ['8:45'],
-                    dateCreate: formattedDate,
-                };
+                    const data = {
+                        type: appointmentType.value,
+                        name: name.value,
+                        phone: phone.value,
+                        times: appointmentType.value === '1' ? selectedTimes.value : ['8:45'],
+                        dateCreate: formattedDate,
+                    };
 
-                axios.post('api/applications', data)
-                    .then(res => {
-                        console.log(res);
-                        name.value = '';
-                        phone.value = '';
-                        isValidName.value = false;
-                        isFormValid.value = false;
-                        selectedTimes.value = [];
-                }).catch(function (error) {
-                    console.log(error.toJSON());
-                });
+                    const response = await axios.post('api/applications', data);
+                    modalSuccess.value = response.data;
+                    console.log(response.data);
+
+                    currentFormKey.value += 1;
+
+                    name.value = '';
+                    phone.value = '';
+                    isValidName.value = false;
+                    isFormValid.value = false;
+                    selectedTimes.value = [];
+
+                    for (const timesKey of times.value) {
+                        timesKey.selected = false;
+                    }
+
+                    appointmentType.value = null;
+                } catch (error) {
+                    console.error(error.toJSON());
+                }
             }
         }
 
@@ -142,7 +163,8 @@ export default {
             updatePhone,
             updateName,
             updateTimes,
-            postForm
+            postForm,
+            formComponent,
         };
     }
 }

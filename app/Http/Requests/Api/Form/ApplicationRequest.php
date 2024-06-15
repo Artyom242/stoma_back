@@ -10,7 +10,7 @@ class ApplicationRequest extends apiRequest
     {
         return [
             'type' => ['required'],
-            'name' => ['required', 'regex:/^[A-Za-zА-Яа-яЁё]+$/'],
+            'name' => ['required', 'regex:/^[A-Za-zА-Яа-яЁё]+$/u'],
             'phone' => ['required', 'min:17'],
             'times' => ['required'],
             'dateCreate' => ['required'],
