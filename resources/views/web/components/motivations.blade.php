@@ -54,7 +54,7 @@
                             <p>vash.doktor.00@mail.ru</p>
                         </div>
                     </a>
-                    <button class="btn btn_submit call_section_btn openModalBtn"><span>Записаться</span></button>
+                    <open-appointment class="call_section_btn"></open-appointment>
                 </div>
             </div>
             <div class="call_section_right">

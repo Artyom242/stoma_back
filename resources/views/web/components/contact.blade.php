@@ -158,7 +158,7 @@
             </div>
 
             <div class="contact_block__btn">
-                <button class="btn btn_submit btn_center openModalBtn"><span>Записаться</span></button>
+                <open-appointment class="btn_center"></open-appointment>
             </div>
         </div>
     </div>

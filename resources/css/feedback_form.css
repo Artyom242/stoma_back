@@ -43,7 +43,7 @@
   }
 
   .stars img:hover {
-    filter: brightness(50%);
+    filter: brightness(90%);
   }
 
   .stars img.hovered,

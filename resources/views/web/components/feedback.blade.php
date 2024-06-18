@@ -2,9 +2,7 @@
     <div class="__container feedback_section">
         <div class="feedback_section__title">
             <h2>Отзывы наших пациентов</h2>
-            <button class="btn btn_submit feedback_title__btn openModalBtn">
-                <span>Оставить отзыв</span>
-            </button>
+            <open-feedback></open-feedback>
         </div>
 
         <div class="feedback_section__body">

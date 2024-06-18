@@ -102,7 +102,7 @@
                 <h3 class="bg_white">Мы делаем улыбки - долговечными и яркими!</h3>
             </div>
             <div class="header_button">
-                <btn-modal></btn-modal>
+                <open-appointment></open-appointment>
             </div>
 
         </div>

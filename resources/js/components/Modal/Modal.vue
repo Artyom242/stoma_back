@@ -1,32 +1,50 @@
 <template>
-        <ModalApplication v-if="isVisible"
+        <ModalFrame v-show="isVisible"
+            :isVisible
+            :title="modalTitle"
             @updateIsVisible="isVisible = $event">
-            <CalendarBlock></CalendarBlock>
-        </ModalApplication>
+            <component
+                :is="currentComponent"
+            ></component>
+        </ModalFrame>
 </template>
 
 <script>
-import ModalApplication from './ModalApplication.vue';
+import ModalFrame from './ModalFrame.vue';
 import CalendarBlock from '../CalendarBlock.vue';
-import eventBus from '../Modal/eventBus';
+import FeedbackForm from '../Forms/Feedbacks/FeedbackForm.vue';
+import eventBus from '../Helpers/eventBus';
 
 export default {
     data() {
         return {
-            isVisible: false
+            isVisible: false,
+            modalTitle: '',
+            currentComponent: null
         };
     },
     components: {
-        ModalApplication,
-        CalendarBlock
+        ModalFrame,
+        CalendarBlock,
+        FeedbackForm
     },
     mounted() {
         eventBus.on('openModal', this.openModal);
     },
+    watch: {
+        isVisible(isVisible) {
+            if (isVisible) {
+                document.body.classList.add('modal-open');
+            } else {
+                document.body.classList.remove('modal-open');
+            }
+        }
+    },
     methods: {
-        openModal() {
+        openModal({ title, component }) {
+            this.modalTitle = title;
+            this.currentComponent = component;
             this.isVisible = true;
-            console.log('ad');
         },
         closeModal() {
             this.isVisible = false;
@@ -34,6 +52,9 @@ export default {
     },
     beforeUnmount() {
         eventBus.off('openModal', this.openModal);
-    }
+    },
 }
 </script>
+
+<style scoped>
+</style>

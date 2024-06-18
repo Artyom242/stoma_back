@@ -1,21 +1,22 @@
 <template>
-    <calendar @date-selected="handleDateSelected"></calendar>
+    <div class="blocks_row">
+        <calendar @date-selected="handleDateSelected"></calendar>
 
-    <transition name="fade" mode="out-in">
-        <component :is="currentForm" :key="currentForm"
-            :selectedDate="selectedDate"
-            :busyTimes="busyTimes"
-            @selectedDate="selectedDate = $event"
-        ></component>
-    </transition>
-
+        <transition name="fade" mode="out-in">
+            <component :is="currentForm" :key="currentForm"
+                :selectedDate="selectedDate"
+                :busyTimes="busyTimes"
+                @selectedDate="selectedDate = $event"
+            ></component>
+        </transition>
+    </div>
 </template>
 
 <script>
 import {ref, watch} from 'vue';
 import Calendar from '../components/CalendarComponents/Calendar.vue';
 import EmptyForm from '../components/CalendarComponents/EmptyForm.vue';
-import AppointmentForm from './Forms/FormFrame.vue';
+import AppointmentForm from './Forms/Applications/FormFrame.vue';
 import {format} from "date-fns";
 
 export default {
@@ -42,7 +43,6 @@ export default {
                 axios.get('api/applications/' + formattedDate)
                     .then(res => {
                         busyTimes.value = res.data.times;
-                        console.log(res.data.times);
                     }).catch(function (error) {
                     console.log(error.toJSON());
                 });

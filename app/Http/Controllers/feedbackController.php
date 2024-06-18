@@ -12,7 +12,11 @@ class feedbackController extends Controller
 
         /* @var Body_feedback $feedback */
 
-        $feedbacks = Body_feedback::query()->paginate(10)->withQueryString();
+        $feedbacks = Body_feedback::query()
+            ->orderBy('created_at', 'desc')
+            ->paginate(10)
+            ->withQueryString();
+
         $feedback_services= [];
 
         foreach ($feedbacks as $feedback){
