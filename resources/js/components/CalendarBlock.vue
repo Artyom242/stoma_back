@@ -1,12 +1,16 @@
 <template>
     <div class="blocks_row">
-        <calendar @date-selected="handleDateSelected"></calendar>
+        <calendar
+            :nullSelectedDate="selectedDate"
+            @date-selected="handleDateSelected"
+        ></calendar>
 
         <transition name="fade" mode="out-in">
-            <component :is="currentForm" :key="currentForm"
+            <component :is="currentForm"
                 :selectedDate="selectedDate"
                 :busyTimes="busyTimes"
-                @selectedDate="selectedDate = $event"
+                @selectedDate="selectedDate=$event"
+                @closeForm="handleCloseForm"
             ></component>
         </transition>
     </div>
@@ -23,10 +27,12 @@ export default {
     components: {
         Calendar,
         EmptyForm,
-        AppointmentForm
+        AppointmentForm,
     },
-    setup() {
+    emits: ['closeForm'],
+    setup(_,{emit}) {
         const selectedDate = ref(null);
+        const currentForm = ref('EmptyForm');
         let busyTimes = ref([]);
 
         const handleDateSelected = (date) => {
@@ -34,7 +40,9 @@ export default {
             getTimeOfDay();
         };
 
-        watch(() => selectedDate, handleDateSelected);
+        watch(selectedDate, (newValue) => {
+            currentForm.value = newValue ? 'AppointmentForm' : 'EmptyForm';
+        });
 
         const getTimeOfDay = async () => {
             if (selectedDate.value){
@@ -44,20 +52,25 @@ export default {
                     .then(res => {
                         busyTimes.value = res.data.times;
                     }).catch(function (error) {
-                    console.log(error.toJSON());
+                    console.log(error);
                 });
             }
         }
 
-        const currentForm = ref('EmptyForm');
+        const handleCloseForm = () => {
+            emit('closeForm');
+            selectedDate.value = null;
+            currentForm.value = 'EmptyForm';
+        };
 
 
         return {
             selectedDate,
             handleDateSelected,
+            handleCloseForm,
             currentForm,
             busyTimes,
-            getTimeOfDay
+            getTimeOfDay,
         };
 
     },
@@ -65,7 +78,6 @@ export default {
         selectedDate(newValue) {
             this.currentForm = newValue ? 'AppointmentForm' : 'EmptyForm';
         }
-
     }
 };
 </script>

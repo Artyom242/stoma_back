@@ -19,6 +19,7 @@
     import OpenApplicationModal from './components/Modal/Buttons/OpenApplicationModal.vue';
     import OpenFeedbackModalModal from './components/Modal/Buttons/OpenFeedbackModal.vue';
     import VueSelect from "vue-select";
+    import SuccessModal from "./components/Modal/SuccessModal.vue";
 
     /**
      * Next, we will create a fresh Vue application instance. You may then begin
@@ -40,6 +41,7 @@
             OpenApplicationModal,
             OpenFeedbackModalModal,
             VueSelect,
+            SuccessModal,
         }
     });
 
@@ -57,6 +59,7 @@
     app.component('open-appointment', OpenApplicationModal);
     app.component('open-feedback', OpenFeedbackModalModal);
     app.component('v-select', VueSelect);
+    app.component('success-modal', SuccessModal);
 
 
     app.mount('#app');

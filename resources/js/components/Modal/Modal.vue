@@ -1,12 +1,15 @@
 <template>
-        <ModalFrame v-show="isVisible"
-            :isVisible
-            :title="modalTitle"
-            @updateIsVisible="isVisible = $event">
-            <component
-                :is="currentComponent"
-            ></component>
-        </ModalFrame>
+    <ModalFrame v-show="isVisible"
+                :isVisible
+                :title="modalTitle"
+                @updateIsVisible="isVisible = $event">
+        <component
+            v-if="isVisible"
+            :is="currentComponent"
+            :component="currentComponent"
+            @closeForm="closeModal"
+        ></component>
+    </ModalFrame>
 </template>
 
 <script>
@@ -20,13 +23,13 @@ export default {
         return {
             isVisible: false,
             modalTitle: '',
-            currentComponent: null
+            currentComponent: null,
         };
     },
     components: {
         ModalFrame,
         CalendarBlock,
-        FeedbackForm
+        FeedbackForm,
     },
     mounted() {
         eventBus.on('openModal', this.openModal);
@@ -48,7 +51,7 @@ export default {
         },
         closeModal() {
             this.isVisible = false;
-        }
+        },
     },
     beforeUnmount() {
         eventBus.off('openModal', this.openModal);

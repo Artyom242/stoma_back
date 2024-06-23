@@ -31,11 +31,15 @@
 </template>
 
 <script>
-import { ref, computed, defineEmits } from 'vue';
+import {ref, computed, watch} from 'vue';
 
 export default {
     emits: ['date-selected'],
+    props: {
+        nullSelectedDate: Date,
+    },
     setup(props, { emit }) {
+
         const now = new Date();
         const year = ref(now.getFullYear());
         const month = ref(now.getMonth());
@@ -84,7 +88,7 @@ export default {
         };
         const selectDay = (day) => {
             if (day.date) {
-
+                console.log(selectedDay.value);
                 if (selectedDay.value && selectedDay.value.getTime() === day.date.getTime()) {
                     selectedDay.value = null;
                     emit('date-selected', null);
@@ -110,6 +114,10 @@ export default {
                 year.value++;
             }
         };
+
+        watch(() => props.nullSelectedDate, (newVal) => {
+            selectedDay.value = newVal;
+        });
 
         return { year, month, calendar, monthNames, isToday, isSelected, isHoliday, selectDay, prevMonth, nextMonth };
     }

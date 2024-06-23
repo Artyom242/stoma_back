@@ -29,6 +29,8 @@
                        @UpdateIsFormValid="isFormValid = $event">
             </component>
         </transition>
+
+<!--        <success-modal v-if="successMessage" :message="successMessage" @close="successMessage = ''" />-->
     </form>
 </template>
 
@@ -37,6 +39,7 @@ import { ref, computed, watch } from 'vue';
 import VueTheMask from 'vue-the-mask';
 import AppointmentForm from './AppointmentForm.vue';
 import ConsultationForm from './ConsultationForm.vue';
+import SuccessModal from '../../Modal/SuccessModal.vue';
 import { format } from 'date-fns';
 
 export default {
@@ -44,8 +47,13 @@ export default {
         selectedDate: Date,
         busyTimes: Array,
     },
-    components: { VueTheMask, AppointmentForm, ConsultationForm },
-    emits: ['selectedDate'],
+    components: {
+        VueTheMask,
+        AppointmentForm,
+        ConsultationForm,
+        SuccessModal,
+    },
+    emits: ['selectedDate', 'closeForm'],
     setup( props, { emit } ) {
         const appointmentType = ref(null);
         const times = ref([
@@ -63,7 +71,7 @@ export default {
         const isValidName = ref(false);
         const isFormValid = ref(false);
         const selectedTimes = ref([]);
-        let modalSuccess = ref([]);
+        let successMessage  = ref([]);
 
         const availableTimes = computed(() => {
             return times.value.filter(time => {
@@ -125,8 +133,9 @@ export default {
                         dateCreate: formattedDate,
                     };
 
-                    const response = await axios.post('api/applications', data);
-                    modalSuccess.value = response.data;
+                    const response = await axios.post('api/applications', data)
+                    successMessage.value = `Запись успешно создана на ${response.data.dateCreate} в ${response.data.times.join(', ')}`;
+
 
                     currentFormKey.value += 1;
 
@@ -142,8 +151,9 @@ export default {
                     }
 
                     appointmentType.value = null;
+                    emit('closeForm');
                 } catch (error) {
-                    console.error(error.toJSON());
+                    console.error(error);
                 }
             }
         }
@@ -161,13 +171,14 @@ export default {
             availableTimes,
             isTimeAvailableForConsultation,
             isTimesEmpty,
+            successMessage,
             updatePhone,
             updateName,
             updateTimes,
             postForm,
             formComponent,
         };
-    }
+    },
 }
 </script>
 

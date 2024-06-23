@@ -66,14 +66,13 @@
     import "vue-select/dist/vue-select.css";
     import {ref, onMounted, watch} from "vue";
     import VueTheMask from 'vue-the-mask';
-    import eventBus from '../../Helpers/eventBus';
 
     export default {
         components: {
             VueTheMask
         },
         emits: ['closeForm'],
-        setup() {
+        setup(_, {emit}) {
             const services = ref([]);
             const rating = ref(0);
             const feedback = ref('');
@@ -88,7 +87,6 @@
                 axios.get('api/feedback')
                     .then(res => {
                         services.value = res.data
-                        console.log(services.value);
                     }) .catch(function (error){
                     console.log(error);
                 })
@@ -136,8 +134,9 @@
                         services.value = [];
                         isValidName.value = false;
 
+                        emit('closeForm');
                     } catch (error) {
-                        console.log(error.toJSON());
+                        console.log(error);
                     }
                 }
             }

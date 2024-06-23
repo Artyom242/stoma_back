@@ -31,13 +31,13 @@
 
 .pagination{
     display: flex;
-    gap: 20px;
+    gap: 10px;
     justify-content: center;
     align-items: center;
 }
 
 .page-item {
-    width: 45px;
+    width: 30px;
     height: 45px;
     display: flex;
     justify-content: center;
@@ -316,7 +316,8 @@
   transition: all, 0.2s;
 }
 .btn:hover,
-.btn:focus {
+.btn:focus,
+.btn:active{
   box-shadow: 2px 2px 10px #bdbdbd;
   border-radius: 10px;
   width: 100%;
@@ -325,7 +326,11 @@
 }
 
 .btn:hover:after,
-.btn:hover::before {
+.btn:hover::before,
+.btn:active:after,
+.btn:active::before,
+.btn:focus:after,
+.btn:focus::before{
   width: 100%;
 }
 

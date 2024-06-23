@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import eventBus from '../Helpers/eventBus';
 export default {
     props: {
         isVisible: Boolean,
