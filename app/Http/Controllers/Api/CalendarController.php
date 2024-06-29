@@ -21,8 +21,17 @@ class CalendarController extends Controller
         return response()->json($weekendDays);
     }
 
-    public function getWeekendTimes($day){
+    public function getWeekendTimes($date){
+        $weekendTimes = Weekend::query()->where('weekendDate', $date)->first();
 
-        return response()->json($day);
+        if ($weekendTimes) {
+            return response()->json([
+                'fromTime' => $weekendTimes['fromTime'],
+                'toTime' => $weekendTimes['toTime'],
+            ]);
+        } else {
+            return response()->json(null);
+        }
+
     }
 }

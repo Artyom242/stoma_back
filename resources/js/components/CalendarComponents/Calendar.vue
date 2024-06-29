@@ -105,7 +105,6 @@ export default {
         const fetchHolidays = () => {
             axios.get(`api/calendar/${Number(month.value + 1)}`)
                 .then(res => {
-                    console.log(res.data);
                     weekends.value += res.data;
                 })
                 .catch(error => {

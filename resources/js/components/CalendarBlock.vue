@@ -9,6 +9,7 @@
             <component :is="currentForm"
                 :selectedDate="selectedDate"
                 :busyTimes="busyTimes"
+                :weekendTimes="weekendTimes"
 
                 @selectedDate="selectedDate=$event"
                 @closeForm="handleCloseForm"
@@ -36,6 +37,7 @@ export default {
         const currentForm = ref('EmptyForm');
         let busyTimes = ref([]);
         let successMessage  = ref('');
+        let weekendTimes = ref([]);
 
         const handleDateSelected = (date) => {
             selectedDate.value = date;
@@ -50,12 +52,22 @@ export default {
             if (selectedDate.value){
                 const formattedDate = format(selectedDate.value, 'yyyy-MM-dd');
 
+                //Промежуток сокращенного дня
+                axios.get('api/calendar/times/' + formattedDate)
+                    .then(dat => {
+                        weekendTimes.value = dat.data;
+                    }).catch(function (error) {
+                    console.log(error);
+                });
+
+                //Время других записей
                 axios.get('api/applications/' + formattedDate)
                     .then(res => {
                         busyTimes.value = res.data.times;
                     }).catch(function (error) {
                     console.log(error);
                 });
+
             }
         }
 
@@ -73,6 +85,7 @@ export default {
             currentForm,
             busyTimes,
             successMessage,
+            weekendTimes,
             getTimeOfDay,
         };
 

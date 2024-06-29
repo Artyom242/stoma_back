@@ -39,11 +39,13 @@ import AppointmentForm from './AppointmentForm.vue';
 import ConsultationForm from './ConsultationForm.vue';
 import { format } from 'date-fns';
 import eventBus from '../../Helpers/eventBus';
+import {indexOf} from "vue-multiselect/dist/vue-multiselect.common";
 
 export default {
     props: {
         selectedDate: Date,
         busyTimes: Array,
+        weekendTimes: Object,
     },
     components: {
         VueTheMask,
@@ -75,9 +77,18 @@ export default {
         let dataSuccess = ref('');
 
         const availableTimes = computed(() => {
-            return times.value.filter(time => {
-                return !props.busyTimes.some(busy => busy.time === time.label);
-            });
+            const startIndex = times.value.findIndex(time => time.label.startsWith(props.weekendTimes.fromTime));
+            const endIndex = times.value.findIndex(time => time.label.endsWith(props.weekendTimes.toTime));
+
+            if (startIndex === -1 || endIndex === -1){
+                return times.value.filter((time => {
+                    return !props.busyTimes.some(busy => busy.time === time.label);
+                }));
+            } else {
+                return times.value.slice(startIndex, endIndex + 1).filter(time => {
+                    return !props.busyTimes.some(busy => busy.time === time.label);
+                });
+            }
         });
 
         const isTimesEmpty = computed(() => {

@@ -53,7 +53,7 @@ export default {
 }
 
 .success-message_text {
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .success-enter-active, .success-leave-active {
