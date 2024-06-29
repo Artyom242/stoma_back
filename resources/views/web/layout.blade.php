@@ -12,6 +12,7 @@
             <main class="main_blocks">
                 <header-sticky></header-sticky>
                 <modal></modal>
+                <success-modal></success-modal>
                 @yield('content')
             </main>
 

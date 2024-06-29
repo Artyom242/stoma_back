@@ -50,12 +50,12 @@ class ApplicationResource extends ModelResource
         return [
             Block::make([
                 ID::make()
-                    ->sortable()
-                    ->hideOnIndex(),
+                    ->sortable(),
                 Grid::make([
                     Column::make([
                         Flex::make([
                             BelongsTo::make('Вид записи', 'applicationTypes', 'name', resource: new Application_typeResource())
+                                ->required()
                                 ->showOnExport(),
                         ]),
                         Flex::make([
@@ -64,7 +64,6 @@ class ApplicationResource extends ModelResource
                                 ->showOnExport(),
                             Phone::make('Телефон', 'phone')
                                 ->mask('+7 999 999 99 99')
-                                ->locked()
                                 ->required()
                                 ->showOnExport(),
                         ]),
@@ -75,13 +74,14 @@ class ApplicationResource extends ModelResource
                                 ->showOnExport(),
                             Select::make('Время', 'application_time')
                                 ->options([
-                                    '09:00' => '9:00',
-                                    '10:00' => '10:00',
-                                    '11:00' => '11:00',
-                                    '12:00' => '12:00',
-                                    '13:00' => '13:00',
-                                    '14:00' => '14:00',
-                                    '15:00' => '15:00',
+                                    '09:00 - 10:00' => '09:00 - 10:00',
+                                    '10:00 - 11:00' => '10:00 - 11:00',
+                                    '11:00 - 12:00' => '11:00 - 12:00',
+                                    '12:00 - 13:00' => '12:00 - 13:00',
+                                    '13:00 - 14:00' => '13:00 - 14:00',
+                                    '14:00 - 15:00' => '14:00 - 15:00',
+                                    '15:00 - 16:00' => '15:00 - 16:00',
+                                    '16:00 - 17:00' => '16:00 - 17:00',
                                 ])
                                 ->nullable()
                                 ->searchable()
@@ -107,13 +107,14 @@ class ApplicationResource extends ModelResource
                 ->format('d.m.Y'),
             Select::make('Время', 'application_time')
                 ->options([
-                    '09:00' => '9:00',
-                    '10:00' => '10:00',
-                    '11:00' => '11:00',
-                    '12:00' => '12:00',
-                    '13:00' => '13:00',
-                    '14:00' => '14:00',
-                    '15:00' => '15:00',
+                    '09:00 - 10:00' => '09:00 - 10:00',
+                    '10:00 - 11:00' => '10:00 - 11:00',
+                    '11:00 - 12:00' => '11:00 - 12:00',
+                    '12:00 - 13:00' => '12:00 - 13:00',
+                    '13:00 - 14:00' => '13:00 - 14:00',
+                    '14:00 - 15:00' => '14:00 - 15:00',
+                    '15:00 - 16:00' => '15:00 - 16:00',
+                    '16:00 - 17:00' => '16:00 - 17:00',
                 ])
                 ->nullable()
                 ->searchable(),

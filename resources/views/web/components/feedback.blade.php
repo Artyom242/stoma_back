@@ -36,7 +36,7 @@
                         @foreach($feedback_services as $services)
                             @foreach($services as $service)
                                 @if ($service->pivot->body_feedback_id == $feedback->id)
-                                    <a href="" class="services_feedback_block btn_blue">{{$service->name}}</a>
+                                    <a href="{{asset('service/' . $service->name_en)}}" class="services_feedback_block btn_blue">{{$service->name}}</a>
                                 @endif
                             @endforeach
                         @endforeach

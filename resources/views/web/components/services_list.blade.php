@@ -16,7 +16,7 @@
 
                 <p>Консультация</p>
             </a>
-            <a href="service_main.html" class="services_block">
+            <a href="{{asset("services/ortopediya")}}" class="services_block">
                 <div class="services_block_icon">
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="60" height="60"
                          viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
@@ -34,7 +34,7 @@
 
                 <p>Ортопедия</p>
             </a>
-            <a href="" class="services_block">
+            <a href="{{asset("services/ortopediya")}}" class="services_block">
                 <div class="services_block_icon">
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="60" height="60"
                          viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">

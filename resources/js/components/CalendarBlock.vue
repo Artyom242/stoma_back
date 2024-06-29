@@ -9,6 +9,7 @@
             <component :is="currentForm"
                 :selectedDate="selectedDate"
                 :busyTimes="busyTimes"
+
                 @selectedDate="selectedDate=$event"
                 @closeForm="handleCloseForm"
             ></component>
@@ -34,6 +35,7 @@ export default {
         const selectedDate = ref(null);
         const currentForm = ref('EmptyForm');
         let busyTimes = ref([]);
+        let successMessage  = ref('');
 
         const handleDateSelected = (date) => {
             selectedDate.value = date;
@@ -70,6 +72,7 @@ export default {
             handleCloseForm,
             currentForm,
             busyTimes,
+            successMessage,
             getTimeOfDay,
         };
 

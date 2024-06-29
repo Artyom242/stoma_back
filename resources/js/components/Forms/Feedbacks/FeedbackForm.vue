@@ -66,6 +66,8 @@
     import "vue-select/dist/vue-select.css";
     import {ref, onMounted, watch} from "vue";
     import VueTheMask from 'vue-the-mask';
+    import {format} from "date-fns";
+    import eventBus from "../../Helpers/eventBus";
 
     export default {
         components: {
@@ -81,7 +83,7 @@
             const phone = ref('');
             const selectedServices = ref([]);
             const isFormValid = ref(false);
-            let modalSuccess = ref([]);
+            let dataSuccess = ref('');
 
             const getServices = async () => {
                 axios.get('api/feedback')
@@ -124,7 +126,8 @@
                         }
 
                         const response = await axios.post('api/feedback', data);
-                        modalSuccess.value = response.data;
+                        dataSuccess.value = `${response.data.name}, спасибо за ваш отзыв! Скоро он появится на этой стене`;
+                        eventBus.emit('showSuccess', dataSuccess.value);
 
 
                         name.value = '';

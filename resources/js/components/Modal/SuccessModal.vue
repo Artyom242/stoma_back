@@ -1,30 +1,33 @@
 <template>
-    <transition name="slide-fade">
-        <div v-if="visible" class="success-message">
-            <p>{{ message }}</p>
+    <transition name="success">
+        <div v-show="visible" class="success-message __container">
+            <p class="success-message_text">{{ message }}</p>
         </div>
     </transition>
 </template>
 
 <script>
+import eventBus from '../Helpers/eventBus';
+
 export default {
     props: {
-        message: String,
         duration: {
             type: Number,
-            default: 7000 // 7 секунд
+            default: 7000
         }
     },
     data() {
         return {
-            visible: false
+            visible: false,
+            message: ''
         };
     },
     mounted() {
-        this.show();
+        eventBus.on('showSuccess', this.show);
     },
     methods: {
-        show() {
+        show(message) {
+            this.message = message;
             this.visible = true;
             setTimeout(() => {
                 this.visible = false;
@@ -37,27 +40,28 @@ export default {
 <style scoped>
 .success-message {
     position: fixed;
-    bottom: -100px; /* Начальная позиция вне экрана */
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%);
     background-color: #4caf50;
     color: white;
+    z-index: 10000;
     padding: 15px;
     border-radius: 4px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    transition: all 0.3s ease-out;
 }
 
-.slide-fade-enter-active, .slide-fade-leave-active {
-    transition: all 0.3s ease;
+.success-message_text {
+    font-weight: 500;
 }
 
-.slide-fade-enter-from, .slide-fade-leave-to {
-    transform: translateY(100px); /* Двигаем вверх при входе */
+.success-enter-active, .success-leave-active {
+    transition: all 0.3s ease-out;
+}
+.success-enter-from, .success-leave-to {
     opacity: 0;
-}
-
-.slide-fade-leave-active {
-    transition: all 0.3s ease 6.7s; /* Добавляем задержку перед скрытием */
+    transform: translateY(100px) translateX(-50%);
 }
 </style>
+

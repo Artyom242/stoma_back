@@ -6,6 +6,7 @@ use App\Http\Controllers\feedbackController;
 use App\Http\Controllers\mainController;
 use App\Http\Controllers\priceController;
 use App\Http\Controllers\Web\Form\ApplicationsCreateController;
+use App\Http\Controllers\Web\Service\ServiceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,3 +26,6 @@ Route::get('/contact', [contactController::class, 'show'])->name('contact');
 Route::get('/clinic', [clinicController::class, 'show'])->name('clinic');
 Route::get('/price', [priceController::class, 'show'])->name('price');
 
+Route::prefix('services')->group(function () {
+    Route::get('/{name}', [ServiceController::class, 'show']);
+});

@@ -13,6 +13,7 @@ class feedbackController extends Controller
         /* @var Body_feedback $feedback */
 
         $feedbacks = Body_feedback::query()
+            ->where('confirm', true)
             ->orderBy('created_at', 'desc')
             ->paginate(10)
             ->withQueryString();

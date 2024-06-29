@@ -29,8 +29,6 @@
                        @UpdateIsFormValid="isFormValid = $event">
             </component>
         </transition>
-
-<!--        <success-modal v-if="successMessage" :message="successMessage" @close="successMessage = ''" />-->
     </form>
 </template>
 
@@ -39,8 +37,8 @@ import { ref, computed, watch } from 'vue';
 import VueTheMask from 'vue-the-mask';
 import AppointmentForm from './AppointmentForm.vue';
 import ConsultationForm from './ConsultationForm.vue';
-import SuccessModal from '../../Modal/SuccessModal.vue';
 import { format } from 'date-fns';
+import eventBus from '../../Helpers/eventBus';
 
 export default {
     props: {
@@ -51,9 +49,12 @@ export default {
         VueTheMask,
         AppointmentForm,
         ConsultationForm,
-        SuccessModal,
     },
-    emits: ['selectedDate', 'closeForm'],
+    emits: [
+        'selectedDate',
+        'closeForm',
+        'successDate'
+    ],
     setup( props, { emit } ) {
         const appointmentType = ref(null);
         const times = ref([
@@ -71,7 +72,7 @@ export default {
         const isValidName = ref(false);
         const isFormValid = ref(false);
         const selectedTimes = ref([]);
-        let successMessage  = ref([]);
+        let dataSuccess = ref('');
 
         const availableTimes = computed(() => {
             return times.value.filter(time => {
@@ -133,9 +134,10 @@ export default {
                         dateCreate: formattedDate,
                     };
 
-                    const response = await axios.post('api/applications', data)
-                    successMessage.value = `Запись успешно создана на ${response.data.dateCreate} в ${response.data.times.join(', ')}`;
-
+                    const response = await axios.post('api/applications', data);
+                    dataSuccess.value = `Запись успешно создана на ${format(response.data.dateCreate, 'dd.MM.yyyy')} на ${response.data.times}.
+                    По указанному номеру скоро позвонят, для подтверждения вашей записи`;
+                    eventBus.emit('showSuccess', dataSuccess.value);
 
                     currentFormKey.value += 1;
 
@@ -171,7 +173,6 @@ export default {
             availableTimes,
             isTimeAvailableForConsultation,
             isTimesEmpty,
-            successMessage,
             updatePhone,
             updateName,
             updateTimes,

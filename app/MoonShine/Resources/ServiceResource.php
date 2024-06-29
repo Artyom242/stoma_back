@@ -7,6 +7,7 @@ namespace App\MoonShine\Resources;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Service;
 
+use MoonShine\ActionButtons\ActionButton;
 use MoonShine\Fields\Number;
 use MoonShine\Fields\Relationships\BelongsTo;
 use MoonShine\Fields\Relationships\BelongsToMany;
@@ -39,9 +40,10 @@ class ServiceResource extends ModelResource
         return [
             Block::make([
                 ID::make()
-                    ->sortable()
-                    ->hideOnIndex(),
+                    ->sortable(),
                 Text::make('Название', 'name'),
+                Text::make('Английский транслит', 'name_en')
+                ->disabled(),
                 Number::make('Цена', 'price'),
                 BelongsTo::make('Раздел услуги', 'sections', 'name', resource: new SectionResource())
                 ->hideOnIndex(),
@@ -68,5 +70,18 @@ class ServiceResource extends ModelResource
     public function rules(Model $item): array
     {
         return [];
+    }
+
+    public function formButtons(): array
+    {
+        return [
+            ActionButton::make('Назад', fn() => $this->indexPageUrl())->customAttributes(['class' => 'btn-lg'])
+        ];
+    }
+    public function detailButtons(): array
+    {
+        return [
+            ActionButton::make('Назад', fn() => $this->indexPageUrl())->customAttributes(['class' => 'btn-lg'])
+        ];
     }
 }
