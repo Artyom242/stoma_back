@@ -6,6 +6,7 @@ namespace App\Providers;
 
 use App\Models\Application;
 use App\Models\Body_feedback;
+use App\MoonShine\Resources\Application_timeResource;
 use App\MoonShine\Resources\ApplicationResource;
 use App\MoonShine\Resources\BodyCommentResource;
 use App\MoonShine\Resources\SectionResource;
@@ -27,7 +28,8 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
      */
     protected function resources(): array
     {
-        return [];
+        return [
+        ];
     }
 
     /**
@@ -62,6 +64,7 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
             MenuGroup::make('Услуги', [
                 MenuItem::make('Все услуги', new ServiceResource()),
                 MenuItem::make('Разделы', new SectionResource()),
+                MenuItem::make('Dhtv', new Application_timeResource()),
             ]),
         ];
     }

@@ -82,6 +82,7 @@ class BodyCommentResource extends ModelResource
                                 ->showOnExport(),
                             Number::make('Оценка', 'rating')
                                 ->max(5)
+                                ->hint('от 1 до 5')
                                 ->stars()
                                 ->sortable()
                                 ->showOnExport(),

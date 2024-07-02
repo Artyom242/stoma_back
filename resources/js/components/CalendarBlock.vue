@@ -25,6 +25,9 @@ import EmptyForm from '../components/CalendarComponents/EmptyForm.vue';
 import AppointmentForm from './Forms/Applications/FormFrame.vue';
 import {format} from "date-fns";
 
+const baseURL = `${window.location.origin}/`; // динамическое определение базового URL
+axios.defaults.baseURL = baseURL;
+
 export default {
     components: {
         Calendar,
