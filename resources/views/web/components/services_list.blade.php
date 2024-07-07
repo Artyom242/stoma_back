@@ -2,7 +2,7 @@
     <div class="__container">
         <h2 class="title_section">Услуги клиники</h2>
         <div class="services_section">
-            <a href="" class="services_block">
+            <a href="{{asset("services/pervichnaya-konsultatsiya")}}" class="services_block">
                 <div class="services_block_icon">
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="60" height="60"
                          viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
@@ -34,7 +34,7 @@
 
                 <p>Ортопедия</p>
             </a>
-            <a href="{{asset("services/ortopediya")}}" class="services_block">
+            <a href="{{asset("services/terapiya")}}" class="services_block">
                 <div class="services_block_icon">
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="60" height="60"
                          viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
@@ -60,9 +60,9 @@
                     </svg>
                 </div>
 
-                <p>Лечение кариеса</p>
+                <p>Терапия</p>
             </a>
-            <a href="" class="services_block">
+            <a href="{{asset("services/lechenie-pulpita")}}" class="services_block">
                 <div class="services_block_icon">
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="60" height="60"
                          viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
@@ -96,7 +96,7 @@
 
                 <p>Лечение пульпита</p>
             </a>
-            <a href="" class="services_block">
+            <a href="{{asset("services/kompleksnaya-chistka-zubov")}}" class="services_block">
                 <div class="services_block_icon">
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="60" height="60"
                          viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
@@ -114,7 +114,7 @@
 
                 <p>Комплексная чистка зубов</p>
             </a>
-            <a href="" class="services_block">
+            <a href="{{asset("services/lechenie-periodontita")}}" class="services_block">
                 <div class="services_block_icon">
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="60" height="60"
                          viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
@@ -134,7 +134,7 @@
 
                 <p>Лечение периодонтита</p>
             </a>
-            <a href="" class="services_block">
+            <a href="{{asset("services/restavratsiya-zuba")}}" class="services_block">
                 <div class="">
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="60" height="60"
                          viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">

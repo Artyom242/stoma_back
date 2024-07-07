@@ -11,6 +11,7 @@ use App\MoonShine\Resources\ApplicationResource;
 use App\MoonShine\Resources\BodyCommentResource;
 use App\MoonShine\Resources\SectionResource;
 use App\MoonShine\Resources\ServiceResource;
+use App\MoonShine\Resources\WeekendResource;
 use Closure;
 use MoonShine\Contracts\Resources\ResourceContract;
 use MoonShine\Menu\MenuElement;
@@ -64,8 +65,8 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
             MenuGroup::make('Услуги', [
                 MenuItem::make('Все услуги', new ServiceResource()),
                 MenuItem::make('Разделы', new SectionResource()),
-                MenuItem::make('Dhtv', new Application_timeResource()),
             ]),
+            MenuItem::make('Праздники', new WeekendResource())
         ];
     }
 

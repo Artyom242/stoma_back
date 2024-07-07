@@ -1,7 +1,6 @@
 <?php
 
 declare(strict_types=1);
-//future slice design
 
 namespace App\MoonShine\Resources;
 
@@ -15,6 +14,7 @@ use MoonShine\Decorations\Grid;
 use MoonShine\Fields\Date;
 use MoonShine\Fields\DateRange;
 use MoonShine\Fields\Field;
+use MoonShine\Fields\Fields;
 use MoonShine\Fields\ID;
 use MoonShine\Fields\Number;
 use MoonShine\Fields\Phone;
@@ -57,6 +57,7 @@ class BodyCommentResource extends ModelResource
     {
         return [
                 ID::make()->sortable()
+                    ->hideOnIndex()
                     ->showOnExport(),
                 Grid::make([
                     Column::make([
@@ -96,6 +97,19 @@ class BodyCommentResource extends ModelResource
                 ]),
         ];
 
+    }
+
+    public function delete(Model $item, ?Fields $fields = null): bool
+    {
+
+        $services = $item->getServicesComment()->get();
+
+        foreach ($services as $service) {
+            $item->getServicesComment()->detach($service->id);
+        }
+
+        // Удаляем запись из таблицы body_feedbacks
+        return $item->delete();
     }
 
     public function formButtons(): array

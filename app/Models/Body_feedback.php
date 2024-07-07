@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Body_feedback extends Model
@@ -14,5 +15,10 @@ class Body_feedback extends Model
     public function getServicesComment():BelongsToMany
     {
         return $this->belongsToMany(Service::class, 'comments', 'body_feedback_id', 'service_id');
+    }
+
+    public function comments(): BelongsTo
+    {
+        return $this->belongsTo(Comment::class, 'body_feedback_id');
     }
 }

@@ -1,5 +1,4 @@
 <template>
-    <div>
         <burgerButton></burgerButton>
 
         <div :class="{ 'header_top_burger_menu': true, 'open': menuStore.isMenuOpen }" ref="menu">
@@ -24,7 +23,7 @@
                                         <h5>{{ section.name }}</h5>
                                     </div>
                                     <nav class="services_menu_block__boby">
-                                        <a href="#"
+                                        <a :href="getServiceUrl(service.name_en)"
                                            v-for="service in filteredServices(section.id)"
                                            :key="service.id"
                                         >{{ service.name }}</a>
@@ -40,13 +39,13 @@
                 </nav>
             </div>
         </div>
-    </div>
 </template>
 
 <script>
 import { menuStore } from '../../Helpers/MenuStore';
 import BurgerButton from './BurgerButton.vue';
 import {computed} from "vue";
+import {fetchData} from "@/components/Helpers/dataFetch";
 
 export default {
     components: { BurgerButton },
@@ -68,8 +67,11 @@ export default {
             links: {}
         };
     },
-    created() {
-        this.fetchData();
+    async created() {
+        const data = await fetchData();
+        this.services = data.services;
+        this.sections = data.sections;
+        this.links = data.links;
     },
     methods: {
         async fetchData() {
@@ -84,6 +86,9 @@ export default {
         },
         filteredServices(sectionId) {
             return this.services.filter((service) => service.section_id === sectionId);
+        },
+        getServiceUrl(nameEn) {
+            return `${window.location.origin}/services/${nameEn}`;
         },
 
         handleClick(event) {

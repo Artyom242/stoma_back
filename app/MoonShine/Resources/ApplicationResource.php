@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources;
 
-use App\Http\Requests\Api\Form\ApplicationRequest;
 use App\Models\Application;
-use App\Models\Application_time;
-use Closure;
 use Illuminate\Database\Eloquent\Model;
+use MoonShine\ActionButtons\ActionButton;
 use MoonShine\Components\MoonShineComponent;
 use MoonShine\Decorations\Block;
 use MoonShine\Decorations\Column;
@@ -114,6 +112,7 @@ class ApplicationResource extends ModelResource
     {
         $item->fill(request()->only(['application_type_id', 'name', 'phone', 'application_date', 'confirm']));
         $item->save();
+
         $item->applicationTimes()->delete();
 
         foreach (request()->input('application_times') as $time){
@@ -123,13 +122,20 @@ class ApplicationResource extends ModelResource
         return $item;
     }
 
+    public function delete(Model $item, ?Fields $fields = null): bool
+    {
+        $item->applicationTimes()->delete();
+
+        return $item->delete();
+    }
+
     public function filters(): array
     {
         return [
             Text::make('Текст', 'text'),
             BelongsTo::make('Вид записи', 'applicationTypes', 'name', resource: new Application_typeResource())
                 ->nullable(),
-            DateRange::make('Дата', 'created_at')
+            DateRange::make('Дата', 'application_date')
                 ->format('d.m.Y'),
             Switcher::make('Подтверждение', 'confirm'),
         ];
