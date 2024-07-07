@@ -53,7 +53,7 @@
                                 <p class="p_16">Пн-Пт с 9:00 до 17:00</p>
                             </div>
                         </div>
-                        <a href="https://wa.me/+79232191220" class="icon_info__block">
+                        <a href="https://wa.me/+79232199999" class="icon_info__block">
                             <div class="icon_img">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
                                      viewBox="0 0 24 24" fill="#0082cb">
@@ -84,7 +84,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <p>+7(983)190-5292</p>
+                                <p>+7(983)190-9999</p>
                             </div>
                         </a>
                     </div>

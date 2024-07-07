@@ -14,9 +14,12 @@
     import Header_bottom from './components/Header/Header_bottom.vue';
     import Modal from './components/Modal/Modal.vue';
     import CalendarBlock from './components/CalendarBlock.vue';
-    import AppointmentForm from './components/Forms/FormFrame.vue';
+    import AppointmentForm from './components/Forms/Applications/FormFrame.vue';
     import VueTheMask from 'vue-the-mask';
-    import BtnModal from './components/Modal/btnModal.vue';
+    import OpenApplicationModal from './components/Modal/Buttons/OpenApplicationModal.vue';
+    import OpenFeedbackModalModal from './components/Modal/Buttons/OpenFeedbackModal.vue';
+    import VueSelect from "vue-select";
+    import SuccessModal from "./components/Modal/SuccessModal.vue";
 
     /**
      * Next, we will create a fresh Vue application instance. You may then begin
@@ -35,7 +38,10 @@
             Modal,
             CalendarBlock,
             AppointmentForm,
-            BtnModal,
+            OpenApplicationModal,
+            OpenFeedbackModalModal,
+            VueSelect,
+            SuccessModal,
         }
     });
 
@@ -50,7 +56,10 @@
     app.component('modal', Modal);
     app.component('calendar-block', CalendarBlock);
     app.component('appointment-form', AppointmentForm);
-    app.component('btn-modal', BtnModal);
+    app.component('open-appointment', OpenApplicationModal);
+    app.component('open-feedback', OpenFeedbackModalModal);
+    app.component('v-select', VueSelect);
+    app.component('success-modal', SuccessModal);
 
 
     app.mount('#app');

@@ -37,23 +37,23 @@
     border-collapse: collapse;
     line-height: 1.2;
   }
-  
+
 .table_requisites table thead tr {
     padding-bottom: 20px;
   }
-  
+
 .table_requisites th {
     font-weight: 400;
     height: 50px;
     font-size: calc(20px + 2 * (100vw / 1300));
   }
-  
+
 .table_requisites tbody tr{
     display: flex;
     font-weight: 300;
     flex: 1 1 auto;
   }
-  
+
 .table_requisites td{
     padding: 10px;
     border-bottom: 1px solid #d3d3d3;
@@ -67,6 +67,10 @@
 .blue_text {
     text-transform: uppercase;
     color: #0082CB;
+}
+
+.table_requisites .border_none{
+    border-bottom: 0;
 }
 
 
@@ -98,6 +102,9 @@
 
     .table_requisites tbody tr{
       flex-direction: column;
+    }
+    .table_requisites td:not(:last-child) {
+        border-right: 0;
     }
 }
 

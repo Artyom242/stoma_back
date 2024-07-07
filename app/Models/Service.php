@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\Transliteratable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Service extends Model
 {
-    use HasFactory;
+    use HasFactory, Transliteratable;
     protected $guarded = false;
 
     public function sections():BelongsTo

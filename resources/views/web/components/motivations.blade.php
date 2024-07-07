@@ -7,7 +7,7 @@
                     <h4 class="light">Ответим на любые вопросы</h4>
                 </div>
                 <div class="call_section_bottom">
-                    <a href="tel:+7(983)190-5292" class="icon_info__block">
+                    <a href="tel:+7(983)190-9999" class="icon_info__block">
                         <div class="icon_img icon_img_blue">
                             <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="128.000000pt" height="128.000000pt" viewBox="0 0 128.000000 128.000000" preserveAspectRatio="xMidYMid meet">
                                 <g transform="translate(0.000000,128.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
@@ -17,7 +17,7 @@
                             </svg>
                         </div>
                         <div>
-                            <p class="phone_text">+7(983)190-5292</p>
+                            <p class="phone_text">+7(983)190-9999</p>
                         </div>
                     </a>
                     <a href="https://wa.me/+79232191220" class="icon_info__block call_section_item">
@@ -54,7 +54,7 @@
                             <p>vash.doktor.00@mail.ru</p>
                         </div>
                     </a>
-                    <button class="btn btn_submit call_section_btn openModalBtn"><span>Записаться</span></button>
+                    <open-appointment class="call_section_btn"></open-appointment>
                 </div>
             </div>
             <div class="call_section_right">

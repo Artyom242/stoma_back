@@ -25,7 +25,7 @@ class ApplicationsController extends Controller
         }
 
         return response()->json([
-            'message' => 'Время обновлено',
+            'message' => 'Занятое время',
             'times' => $busyTimes]);
     }
 
@@ -46,11 +46,6 @@ class ApplicationsController extends Controller
             ]);
         }
 
-        return response()->json(
-            ['message' => 'Заявка успешно создана',
-                'data' => $data],
-            201);
-
+        return response()->json($data, 201);
     }
-
 }

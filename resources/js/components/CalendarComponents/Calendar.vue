@@ -20,7 +20,7 @@
             <tbody class="body_calendar">
             <tr v-for="(week, weekIndex) in calendar" :key="weekIndex">
                 <td v-for="(day, dayIndex) in week" :key="day.date ? day.date.toISOString() : dayIndex"
-                    :class="{ today: isToday(day), selected: isSelected(day), holiday: isHoliday(dayIndex) }"
+                    :class="{ today: isToday(day), selected: isSelected(day), holiday: isHoliday(day.date) }"
                     @click="selectDay(day)">
                     {{ day.day }}
                 </td>
@@ -31,15 +31,20 @@
 </template>
 
 <script>
-import { ref, computed, defineEmits } from 'vue';
+import {ref, computed, watch, onMounted} from 'vue';
 
 export default {
     emits: ['date-selected'],
+    props: {
+        nullSelectedDate: Date,
+    },
     setup(props, { emit }) {
+
         const now = new Date();
         const year = ref(now.getFullYear());
         const month = ref(now.getMonth());
         const selectedDay = ref(null);
+        const weekends = ref([]);
 
         const monthNames = [
             "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
@@ -59,32 +64,56 @@ export default {
         };
 
         const calendar = computed(() => {
-            const Dlast = new Date(year.value, month.value + 1, 0).getDate();
-            const DNfirst = new Date(year.value, month.value, 1).getDay();
+            const firstDay = new Date(year.value, month.value, 1);
+            const lastDay = new Date(year.value, month.value + 1, 0);
+
+            const Dlast = lastDay.getDate(); // Последний день месяца
+            const DNfirst = firstDay.getDay(); // День недели первого дня месяца
             const startOffset = DNfirst === 0 ? 6 : DNfirst - 1;
 
             const days = [];
+            let dayCounter = 1; // Счетчик для чисел месяца
+
+            // Заполняем пустые ячейки перед первым днем месяца
             for (let i = 0; i < startOffset; i++) {
                 days.push({ day: '', date: null });
             }
+
+            // Заполняем ячейки для каждого дня месяца
             for (let i = 1; i <= Dlast; i++) {
-                days.push({ day: i, date: new Date(year.value, month.value, i) });
+                const currentDate = new Date(year.value, month.value, dayCounter);
+                days.push({ day: dayCounter, date: currentDate });
+                dayCounter++;
             }
 
             const weeks = [];
-            while (days.length) {
+            while (days.length > 0) {
                 weeks.push(days.splice(0, 7));
             }
-
             return weeks;
         });
 
-        const isHoliday = (dayIndex) => {
-            return dayIndex === 5 || dayIndex === 6;
+        const isHoliday = (date) => {
+            if (!date) return false;
+            const dayOfWeek = date.getDay();
+            const isWeekend = dayOfWeek === 0 || dayOfWeek === 6; // Воскресенье или суббота
+            const formattedDate = date.toLocaleDateString('ru-RU'); // Пример для русской локали
+            const isHolidayDate = weekends.value.includes(formattedDate);
+            return isWeekend || isHolidayDate;
         };
+
+        const fetchHolidays = () => {
+            axios.get(`api/calendar/${Number(month.value + 1)}`)
+                .then(res => {
+                    weekends.value += res.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        };
+
         const selectDay = (day) => {
             if (day.date) {
-
                 if (selectedDay.value && selectedDay.value.getTime() === day.date.getTime()) {
                     selectedDay.value = null;
                     emit('date-selected', null);
@@ -97,6 +126,7 @@ export default {
 
         const prevMonth = () => {
             month.value--;
+            weekends.value = [];
             if (month.value < 0) {
                 month.value = 11;
                 year.value--;
@@ -105,11 +135,22 @@ export default {
 
         const nextMonth = () => {
             month.value++;
+            weekends.value = [];
             if (month.value > 11) {
                 month.value = 0;
                 year.value++;
             }
         };
+
+
+
+        watch(() => props.nullSelectedDate, (newVal) => {
+            selectedDay.value = newVal;
+        });
+
+        watch(month, fetchHolidays);
+
+        onMounted(fetchHolidays);
 
         return { year, month, calendar, monthNames, isToday, isSelected, isHoliday, selectDay, prevMonth, nextMonth };
     }
@@ -119,5 +160,10 @@ export default {
 <style scoped>
 .selected {
     background: rgb(220, 241, 253);;
+}
+
+.holiday {
+    pointer-events: none;
+    //background: #fff7f7;
 }
 </style>

@@ -1,7 +1,6 @@
 <section class="map_section">
-    <iframe
-        src="https://yandex.ru/map-widget/v1/?um=constructor%3Aeeb1d9d3cb447392b942d4c739ba3a1148b0a81c6871315790d93654bd68c60a&amp;source=constructor"
-        width="100%" height="100%" frameborder="0"></iframe>
+    <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A8ac33a6f34a5781fbac41066533d5546a8a4066183c104f200f50b7cd52d8feb&amp;source=constructor"
+            width="100%" height="100%" frameborder="0"></iframe>
     <div class="__container map_section__contacts">
         <div class="map_block">
             <h2 class="title_block">Ждем вас в гости!</h2>
@@ -89,7 +88,7 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="phone_text">+7(983)190-5292</p>
+                        <p class="phone_text">+7(983)190-9999</p>
                     </div>
                 </a>
             </div>

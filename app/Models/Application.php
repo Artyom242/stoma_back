@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Application extends Model
 {
     use HasFactory;
+
     protected $guarded = false;
 
     public function applicationTypes():BelongsTo

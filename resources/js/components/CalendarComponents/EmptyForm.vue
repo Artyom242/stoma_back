@@ -3,7 +3,7 @@
         <h4 class="title_calendar empty_title">Выберите число для записи</h4>
         <div class="empty_text">
             <p>Для выбора нужно нажать на число :)</p>
-            <p>Не рабочие дни помечены <span class="red">красным цветом</span></p>
+            <p>Нерабочие дни помечены <span class="red">красным цветом</span></p>
         </div>
     </div>
 </template>

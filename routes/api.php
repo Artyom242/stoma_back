@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\ApplicationsController;
+use App\Http\Controllers\Api\CalendarController;
+use App\Http\Controllers\Api\FeedbackController;
 use App\Http\Controllers\Api\StickyHeaderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +18,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/stickyHeader', [StickyHeaderController::class, 'index'])->name('StickyHeader');
+Route::get('/stickyHeader', [StickyHeaderController::class, 'index']);
 Route::get('/applications/{data}', [ApplicationsController::class, 'getDays']);
 Route::post('/applications', [ApplicationsController::class, 'create']);
+
+Route::get('/calendar/{month}', [CalendarController::class, 'getWeekendDays']);
+Route::get('/calendar/times/{date}', [CalendarController::class, 'getWeekendTimes']);
+
+Route::get('/feedback', [FeedbackController::class, 'getServices']);
+Route::post('/feedback', [FeedbackController::class, 'createFeedback']);

@@ -38,14 +38,25 @@ import VueTheMask from 'vue-the-mask';
 import AppointmentForm from './AppointmentForm.vue';
 import ConsultationForm from './ConsultationForm.vue';
 import { format } from 'date-fns';
+import eventBus from '../../Helpers/eventBus';
+import {indexOf} from "vue-multiselect/dist/vue-multiselect.common";
 
 export default {
     props: {
         selectedDate: Date,
         busyTimes: Array,
+        weekendTimes: Object,
     },
-    components: { VueTheMask, AppointmentForm, ConsultationForm },
-    emits: ['selectedDate'],
+    components: {
+        VueTheMask,
+        AppointmentForm,
+        ConsultationForm,
+    },
+    emits: [
+        'selectedDate',
+        'closeForm',
+        'successDate'
+    ],
     setup( props, { emit } ) {
         const appointmentType = ref(null);
         const times = ref([
@@ -63,12 +74,21 @@ export default {
         const isValidName = ref(false);
         const isFormValid = ref(false);
         const selectedTimes = ref([]);
-        let modalSuccess = ref([]);
+        let dataSuccess = ref('');
 
         const availableTimes = computed(() => {
-            return times.value.filter(time => {
-                return !props.busyTimes.some(busy => busy.time === time.label);
-            });
+            const startIndex = times.value.findIndex(time => time.label.startsWith(props.weekendTimes.fromTime));
+            const endIndex = times.value.findIndex(time => time.label.endsWith(props.weekendTimes.toTime));
+
+            if (startIndex === -1 || endIndex === -1){
+                return times.value.filter((time => {
+                    return !props.busyTimes.some(busy => busy.time === time.label);
+                }));
+            } else {
+                return times.value.slice(startIndex, endIndex + 1).filter(time => {
+                    return !props.busyTimes.some(busy => busy.time === time.label);
+                });
+            }
         });
 
         const isTimesEmpty = computed(() => {
@@ -126,7 +146,9 @@ export default {
                     };
 
                     const response = await axios.post('api/applications', data);
-                    modalSuccess.value = response.data;
+                    dataSuccess.value = `Запись успешно создана на ${format(response.data.dateCreate, 'dd.MM.yyyy')} на ${response.data.times}.
+                    По указанному номеру скоро позвонят, для подтверждения вашей записи`;
+                    eventBus.emit('showSuccess', dataSuccess.value);
 
                     currentFormKey.value += 1;
 
@@ -142,8 +164,9 @@ export default {
                     }
 
                     appointmentType.value = null;
+                    emit('closeForm');
                 } catch (error) {
-                    console.error(error.toJSON());
+                    console.error(error);
                 }
             }
         }
@@ -167,7 +190,7 @@ export default {
             postForm,
             formComponent,
         };
-    }
+    },
 }
 </script>
 

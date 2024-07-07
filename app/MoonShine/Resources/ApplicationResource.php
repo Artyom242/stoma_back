@@ -6,6 +6,7 @@ namespace App\MoonShine\Resources;
 
 use App\Models\Application;
 use Illuminate\Database\Eloquent\Model;
+use MoonShine\ActionButtons\ActionButton;
 use MoonShine\Components\MoonShineComponent;
 use MoonShine\Decorations\Block;
 use MoonShine\Decorations\Column;
@@ -14,10 +15,11 @@ use MoonShine\Decorations\Grid;
 use MoonShine\Fields\Date;
 use MoonShine\Fields\DateRange;
 use MoonShine\Fields\Field;
+use MoonShine\Fields\Fields;
 use MoonShine\Fields\ID;
 use MoonShine\Fields\Phone;
 use MoonShine\Fields\Relationships\BelongsTo;
-use MoonShine\Fields\Relationships\BelongsToMany;
+use MoonShine\Fields\Relationships\HasMany;
 use MoonShine\Fields\Select;
 use MoonShine\Fields\Switcher;
 use MoonShine\Fields\Text;
@@ -35,9 +37,6 @@ class ApplicationResource extends ModelResource
     protected string $title = 'Заявки';
     protected int $itemsPerPage = 15;
 
-    protected string $sortDirection = 'asc';
-    protected string $sortColumn = 'confirm';
-
     public function import(): ?ImportHandler
     {
         return null;
@@ -50,13 +49,14 @@ class ApplicationResource extends ModelResource
         return [
             Block::make([
                 ID::make()
-                    ->sortable()
-                    ->hideOnIndex(),
+                    ->sortable(),
                 Grid::make([
                     Column::make([
                         Flex::make([
                             BelongsTo::make('Вид записи', 'applicationTypes', 'name', resource: new Application_typeResource())
-                                ->showOnExport(),
+                                ->required()
+                                ->showOnExport()
+                                ->hideOnIndex(),
                         ]),
                         Flex::make([
                             Text::make('Имя', 'name')
@@ -64,7 +64,6 @@ class ApplicationResource extends ModelResource
                                 ->showOnExport(),
                             Phone::make('Телефон', 'phone')
                                 ->mask('+7 999 999 99 99')
-                                ->locked()
                                 ->required()
                                 ->showOnExport(),
                         ]),
@@ -73,20 +72,32 @@ class ApplicationResource extends ModelResource
                                 ->format('d.m.Y')
                                 ->required()
                                 ->showOnExport(),
-                            Select::make('Время', 'application_time')
+                            Select::make('Время', 'application_times')
                                 ->options([
-                                    '09:00' => '9:00',
-                                    '10:00' => '10:00',
-                                    '11:00' => '11:00',
-                                    '12:00' => '12:00',
-                                    '13:00' => '13:00',
-                                    '14:00' => '14:00',
-                                    '15:00' => '15:00',
+                                    '8:45' => '8:45',
+                                    '9:00 - 10:00' => '9:00 - 10:00',
+                                    '10:00 - 11:00' => '10:00 - 11:00',
+                                    '11:00 - 12:00' => '11:00 - 12:00',
+                                    '12:00 - 13:00' => '12:00 - 13:00',
+                                    '13:00 - 14:00' => '13:00 - 14:00',
+                                    '14:00 - 15:00' => '14:00 - 15:00',
+                                    '15:00 - 16:00' => '15:00 - 16:00',
+                                    '16:00 - 17:00' => '16:00 - 17:00',
                                 ])
+                                ->multiple()
+                                ->badge('success')
                                 ->nullable()
                                 ->searchable()
                                 ->required()
-                                ->showOnExport(),
+                                ->showOnExport()
+                                ->hideOnIndex()
+                                ->changeFill(function (Application $application){
+                                    return $application->applicationTimes()->pluck('time')->toArray();
+                                }),
+                            HasMany::make('Время', 'applicationTimes', resource: new Application_timeResource())
+                                ->hideOnAll()
+                                ->showOnIndex()
+                                ->required(),
                         ]),
                         Switcher::make('Подтверждение', 'confirm')
                             ->sortable()
@@ -97,26 +108,35 @@ class ApplicationResource extends ModelResource
         ];
     }
 
+    public function save(Model $item, ?Fields $fields = null): Model
+    {
+        $item->fill(request()->only(['application_type_id', 'name', 'phone', 'application_date', 'confirm']));
+        $item->save();
+
+        $item->applicationTimes()->delete();
+
+        foreach (request()->input('application_times') as $time){
+            $item->applicationTimes()->create(['time'=> $time]);
+        }
+
+        return $item;
+    }
+
+    public function delete(Model $item, ?Fields $fields = null): bool
+    {
+        $item->applicationTimes()->delete();
+
+        return $item->delete();
+    }
+
     public function filters(): array
     {
         return [
             Text::make('Текст', 'text'),
             BelongsTo::make('Вид записи', 'applicationTypes', 'name', resource: new Application_typeResource())
                 ->nullable(),
-            DateRange::make('Дата', 'created_at')
+            DateRange::make('Дата', 'application_date')
                 ->format('d.m.Y'),
-            Select::make('Время', 'application_time')
-                ->options([
-                    '09:00' => '9:00',
-                    '10:00' => '10:00',
-                    '11:00' => '11:00',
-                    '12:00' => '12:00',
-                    '13:00' => '13:00',
-                    '14:00' => '14:00',
-                    '15:00' => '15:00',
-                ])
-                ->nullable()
-                ->searchable(),
             Switcher::make('Подтверждение', 'confirm'),
         ];
     }

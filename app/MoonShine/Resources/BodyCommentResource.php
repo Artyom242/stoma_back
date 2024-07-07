@@ -6,6 +6,7 @@ namespace App\MoonShine\Resources;
 
 use App\Models\Body_feedback;
 use Illuminate\Database\Eloquent\Model;
+use MoonShine\ActionButtons\ActionButton;
 use MoonShine\Components\MoonShineComponent;
 use MoonShine\Decorations\Block;
 use MoonShine\Decorations\Column;
@@ -13,6 +14,7 @@ use MoonShine\Decorations\Grid;
 use MoonShine\Fields\Date;
 use MoonShine\Fields\DateRange;
 use MoonShine\Fields\Field;
+use MoonShine\Fields\Fields;
 use MoonShine\Fields\ID;
 use MoonShine\Fields\Number;
 use MoonShine\Fields\Phone;
@@ -32,8 +34,10 @@ class BodyCommentResource extends ModelResource
     protected string $model = Body_feedback::class;
 
     protected string $title = 'Отзывы';
-    protected string $sortDirection = 'asc';
-    protected string $sortColumn = 'confirm';
+    protected string $sortDirection = 'desc';
+
+    protected int $itemsPerPage = 15;
+    protected string $sortColumn = 'created_at';
 
 
 
@@ -59,15 +63,16 @@ class BodyCommentResource extends ModelResource
                     Column::make([
                         Block::make('Основная информация', [
                             Text::make('Имя', 'name')
-                                ->showOnExport(),
+                                ->showOnExport()
+                                ->required(),
                             Phone::make('Телефон', 'phone')
                                 ->mask('+7 999 999 99 99')
-                                ->locked()
                                 ->required()
                                 ->hideOnIndex()
                                 ->showOnExport(),
                             Textarea::make('Текст', 'text')
-                                ->showOnExport(),
+                                ->showOnExport()
+                                ->required(),
                         ]),
                     ])->columnSpan(8),
                     Column::make([
@@ -78,6 +83,7 @@ class BodyCommentResource extends ModelResource
                                 ->showOnExport(),
                             Number::make('Оценка', 'rating')
                                 ->max(5)
+                                ->hint('от 1 до 5')
                                 ->stars()
                                 ->sortable()
                                 ->showOnExport(),
@@ -89,6 +95,33 @@ class BodyCommentResource extends ModelResource
                         ])
                     ])->columnSpan(4),
                 ]),
+        ];
+
+    }
+
+    public function delete(Model $item, ?Fields $fields = null): bool
+    {
+
+        $services = $item->getServicesComment()->get();
+
+        foreach ($services as $service) {
+            $item->getServicesComment()->detach($service->id);
+        }
+
+        // Удаляем запись из таблицы body_feedbacks
+        return $item->delete();
+    }
+
+    public function formButtons(): array
+    {
+        return [
+            ActionButton::make('Назад', fn() => $this->indexPageUrl())->customAttributes(['class' => 'btn-lg'])
+        ];
+    }
+    public function detailButtons(): array
+    {
+        return [
+            ActionButton::make('Назад', fn() => $this->indexPageUrl())->customAttributes(['class' => 'btn-lg'])
         ];
     }
 

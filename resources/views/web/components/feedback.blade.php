@@ -2,9 +2,7 @@
     <div class="__container feedback_section">
         <div class="feedback_section__title">
             <h2>Отзывы наших пациентов</h2>
-            <button class="btn btn_submit feedback_title__btn openModalBtn">
-                <span>Оставить отзыв</span>
-            </button>
+            <open-feedback></open-feedback>
         </div>
 
         <div class="feedback_section__body">
@@ -38,7 +36,7 @@
                         @foreach($feedback_services as $services)
                             @foreach($services as $service)
                                 @if ($service->pivot->body_feedback_id == $feedback->id)
-                                    <a href="" class="services_feedback_block btn_blue">{{$service->name}}</a>
+                                    <a href="{{asset('services/' . $service->name_en)}}" class="services_feedback_block btn_blue">{{$service->name}}</a>
                                 @endif
                             @endforeach
                         @endforeach

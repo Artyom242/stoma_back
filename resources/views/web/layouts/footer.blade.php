@@ -1,18 +1,18 @@
 <div class="__container">
     <div class="footer_top">
-        <div>
+        <div class="footer_block">
             <h4 class="title_footer">Услуги клиники</h4>
             <nav class="menu_footer">
-                <a href="">Консультация</a>
-                <a href="">Ортопедия</a>
-                <a href="service.html">Лечение кариеса</a>
-                <a href="">Лечение пульпита</a>
-                <a href="">Комплексная чистка зубов</a>
-                <a href="">Лечение периодонтита</a>
-                <a href="">Реставрация зуба</a>
+                <a href="{{asset("services/pervichnaya-konsultatsiya")}}">Консультация</a>
+                <a href="{{asset("services/ortopediya")}}">Ортопедия</a>
+                <a href="{{asset("services/lechenie-kariesa")}}">Лечение кариеса</a>
+                <a href="{{asset("services/lechenie-pulpita")}}">Лечение пульпита</a>
+                <a href="{{asset("services/kompleksnaya-chistka-zubov")}}">Комплексная чистка зубов</a>
+                <a href="{{asset("services/lechenie-periodontita")}}">Лечение периодонтита</a>
+                <a href="{{asset("services/restavratsiya-zuba")}}">Реставрация зуба</a>
             </nav>
         </div>
-        <div>
+        <div class="footer_block">
             <h4 class="title_footer">Контакты</h4>
             <div class="contacts_footer menu_footer">
                 <a href="" class="icon_info__block">
@@ -95,12 +95,12 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="p_20 phone_text">+7(932)233-99-99</p>
+                        <p class="p_20 phone_text">+7(932)999-99-99</p>
                     </div>
                 </a>
                 <div class="icon_info__block">
                     <p>Соц сети:</p>
-                    <a href="https://wa.me/+79232191220" class="social_block">
+                    <a href="https://wa.me" class="social_block">
                         <div class="icon_img">
                             <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                  fill="#fff">
@@ -123,7 +123,7 @@
                 </div>
             </div>
         </div>
-        <div>
+        <div class="footer_block">
             <h4 class="title_footer">Навигация по сайту</h4>
             <nav class="menu_footer">
                 <a href="{{asset('/')}}">Главная</a>
@@ -139,10 +139,7 @@
             <p>2024. Все права защищены.</p>
         </div>
         <div>
-            <p style="text-align: end;">
-                Разработка сайта -
-                <a href="https://t.me/Kot__Mika">Mika Company</a>
-            </p>
+            <a href="https://t.me/Kot__Mika" style="text-align: end;">Разработка сайта</a>
         </div>
     </div>
 </div>

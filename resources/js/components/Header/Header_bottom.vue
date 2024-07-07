@@ -23,7 +23,7 @@
                                             <h5>{{ section.name }}</h5>
                                         </div>
                                         <nav class="services_menu_block__boby">
-                                            <a href=""
+                                            <a :href="getServiceUrl(service.name_en)"
                                                v-for="service in filteredServices(section.id)"
                                                :key="service.id"
                                             >{{ service.name }}</a>
@@ -63,6 +63,9 @@ import { fetchData } from '../Helpers/dataFetch';
         methods: {
             filteredServices(sectionId) {
                 return this.services.filter((service) => service.section_id === sectionId);
+            },
+            getServiceUrl(nameEn) {
+                return `${window.location.origin}/services/${nameEn}`;
             }
         }
     }

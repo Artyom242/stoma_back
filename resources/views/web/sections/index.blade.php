@@ -5,7 +5,6 @@
 @endsection
 
 @section('content')
-
     @include('web.components.services_list')
 
     @include('web.components.index_about_us')
