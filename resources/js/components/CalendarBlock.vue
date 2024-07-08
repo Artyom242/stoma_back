@@ -41,10 +41,18 @@ export default {
         let busyTimes = ref([]);
         let successMessage  = ref('');
         let weekendTimes = ref([]);
+        let controller = ref(null);
+        let timeoutId = ref(null);
 
         const handleDateSelected = (date) => {
-            selectedDate.value = date;
-            getTimeOfDay();
+            if (timeoutId.value) {
+                clearTimeout(timeoutId.value);
+            }
+
+            timeoutId.value = setTimeout(() => {
+                selectedDate.value = date;
+                getTimeOfDay();
+            }, 700);
         };
 
         watch(selectedDate, (newValue) => {
@@ -52,26 +60,34 @@ export default {
         });
 
         const getTimeOfDay = async () => {
-            if (selectedDate.value){
-                const formattedDate = format(selectedDate.value, 'yyyy-MM-dd');
+                    if (selectedDate.value) {
 
-                //Промежуток сокращенного дня
-                axios.get('api/calendar/times/' + formattedDate)
-                    .then(dat => {
-                        weekendTimes.value = dat.data;
-                    }).catch(function (error) {
-                    console.log(error);
-                });
+                        if (controller.value) {
+                            controller.value.abort();
+                        }
 
-                //Время других записей
-                axios.get('api/applications/' + formattedDate)
-                    .then(res => {
-                        busyTimes.value = res.data.times;
-                    }).catch(function (error) {
-                    console.log(error);
-                });
+                        controller.value = new AbortController();
+                        const signal = controller.value.signal;
 
-            }
+                        const formattedDate = format(selectedDate.value, 'yyyy-MM-dd');
+
+                        //Промежуток сокращенного дня
+                        axios.get('api/calendar/times/' + formattedDate, { signal })
+                            .then(dat => {
+                                weekendTimes.value = dat.data;
+                            }).catch(function (error) {
+                            console.log(error);
+                        });
+
+                        //Время других записей
+                        axios.get('api/applications/' + formattedDate,{ signal })
+                            .then(res => {
+                                busyTimes.value = res.data.times;
+                                console.log('ad')
+                            }).catch(function (error) {
+                                console.log(error)
+                        });
+                    }
         }
 
         const handleCloseForm = () => {
